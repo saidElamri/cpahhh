@@ -60,12 +60,17 @@ function initializeEventListeners() {
     const continueBtns = document.querySelectorAll('.js-continue-shopping');
     continueBtns.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); closeCartDrawer(); closeModal(); }));
 
-    // Checkout button(s) - redirect to content locker placeholder (to be implemented by you)
+    // Checkout button(s) - load CPA locker dynamically and open modal
     const checkoutBtns = document.querySelectorAll('.btn-checkout');
     checkoutBtns.forEach(btn => btn.addEventListener('click', (e) => {
         e.preventDefault();
-        // Open the in-page content locker modal (placeholder) instead of navigating away.
-        openContentLocker();
+        // Load CPA locker script if not already loaded, then open modal
+        loadCPALockerScript().then(() => {
+            openContentLocker();
+        }).catch((error) => {
+            console.error('Failed to load CPA locker:', error);
+            showToast('Failed to load checkout. Please try again.', 3000);
+        });
     }));
     
     // Close modal on outside click
@@ -282,6 +287,70 @@ function closeModal() {
         // Restore body scroll
         document.body.style.overflow = '';
     }
+}
+
+// CPA Locker Script Loader
+let cpaLockerScriptLoaded = false;
+let cpaLockerScriptLoading = false;
+
+function loadCPALockerScript() {
+    return new Promise((resolve, reject) => {
+        // If already loaded, resolve immediately
+        if (cpaLockerScriptLoaded) {
+            resolve();
+            return;
+        }
+
+        // If currently loading, wait for it
+        if (cpaLockerScriptLoading) {
+            const checkInterval = setInterval(() => {
+                if (cpaLockerScriptLoaded) {
+                    clearInterval(checkInterval);
+                    resolve();
+                } else if (!cpaLockerScriptLoading) {
+                    clearInterval(checkInterval);
+                    reject(new Error('Script loading failed'));
+                }
+            }, 100);
+            return;
+        }
+
+        // Start loading
+        cpaLockerScriptLoading = true;
+
+        // Initialize CPA locker configuration
+        window.qegwI_akJ_UStTbc = {"it":4134613,"key":"0a37e"};
+
+        // Create script element
+        const lockerScript = document.createElement('script');
+        lockerScript.id = 'locker-external';
+        lockerScript.src = 'https://duw03nk63ml3f.cloudfront.net/8c840e4.js';
+        lockerScript.async = true;
+
+        // Add load handler
+        lockerScript.onload = function() {
+            console.log('CPA locker script loaded');
+            cpaLockerScriptLoaded = true;
+            cpaLockerScriptLoading = false;
+            if (window.updateLockerDebug) window.updateLockerDebug('script-loaded', true);
+            if (window.initContentLocker) {
+                if (window.updateLockerDebug) window.updateLockerDebug('init-present', true);
+            }
+            resolve();
+        };
+
+        // Add error handler
+        lockerScript.onerror = function() {
+            console.error('Failed to load CPA locker script');
+            cpaLockerScriptLoading = false;
+            if (window.updateLockerDebug) window.updateLockerDebug('script-loaded', false);
+            reject(new Error('Failed to load CPA locker script'));
+        };
+
+        // Add script to page
+        document.head.appendChild(lockerScript);
+        if (window.updateLockerDebug) window.updateLockerDebug('script-appended', true);
+    });
 }
 
 // Content Locker functions

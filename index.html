@@ -84,49 +84,7 @@
     </script>
     -->
 
-    <!-- Content Locker Script -->
-    <script>
-        // Initialize locker configuration
-        window.aDAqo_Dkm_RyavHc = {"it":4190087,"key":"7afe5"};
-        
-    // Create script element
-    var lockerScript = document.createElement('script');
-    lockerScript.id = 'locker-external';
-    lockerScript.src = 'https://duw03nk63ml3f.cloudfront.net/fe7f569.js';
-    lockerScript.async = true;
-        
-        // Add load handler
-        lockerScript.onload = function() {
-            console.log('Content locker script loaded');
-            if (window.updateLockerDebug) window.updateLockerDebug('script-loaded', true);
-            if (window.initContentLocker) {
-                if (window.updateLockerDebug) window.updateLockerDebug('init-present', true);
-                const modal = document.getElementById('contentLockerModal');
-                if (modal && modal.classList.contains('active')) {
-                    try { window.initContentLocker(); } catch(e) { console.error(e); }
-                }
-            }
-        };
-        
-        // Add error handler
-        lockerScript.onerror = function() {
-            console.error('Failed to load content locker script');
-            if (window.updateLockerDebug) window.updateLockerDebug('script-loaded', false);
-            const loading = document.querySelector('.locker-loading');
-            if (loading) {
-                loading.innerHTML = `
-                    <div class="locker-error">
-                        <p>Unable to load checkout. Please try again.</p>
-                        <button class="btn btn-primary" onclick="location.reload()">Reload Page</button>
-                    </div>
-                `;
-            }
-        };
-        
-        // Add script to page
-        document.head.appendChild(lockerScript);
-        if (window.updateLockerDebug) window.updateLockerDebug('script-appended', true);
-    </script>
+    <!-- Content Locker Script will be loaded dynamically when checkout is clicked -->
 
 </head>
     
