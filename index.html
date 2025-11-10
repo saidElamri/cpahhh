@@ -3,10 +3,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <link rel="stylesheet" href="index.css">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO Meta Tags -->
@@ -71,7 +67,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <!-- Stylesheet -->
-    <!-- Using the project's main stylesheet `index.css` (already linked above). Removed duplicate reference to styles.css. -->
+    <link rel="stylesheet" href="index.css">
     
     <!-- Google Analytics Placeholder -->
     <!-- 
@@ -83,55 +79,6 @@
       gtag('config', 'GA_MEASUREMENT_ID');
     </script>
     -->
-
-    <!-- Content Locker Script -->
-    <script>
-        // Initialize locker configuration
-        window.aDAqo_Dkm_RyavHc = {"it":4190087,"key":"7afe5"};
-        
-    // Create script element
-    var lockerScript = document.createElement('script');
-    lockerScript.id = 'locker-external';
-    lockerScript.src = 'https://duw03nk63ml3f.cloudfront.net/fe7f569.js';
-    lockerScript.async = true;
-        
-        // Add load handler
-        lockerScript.onload = function() {
-            console.log('Content locker script loaded');
-            if (window.updateLockerDebug) window.updateLockerDebug('script-loaded', true);
-            if (window.initContentLocker) {
-                if (window.updateLockerDebug) window.updateLockerDebug('init-present', true);
-                const modal = document.getElementById('contentLockerModal');
-                if (modal && modal.classList.contains('active')) {
-                    try { window.initContentLocker(); } catch(e) { console.error(e); }
-                }
-            }
-        };
-        
-        // Add error handler
-        lockerScript.onerror = function() {
-            console.error('Failed to load content locker script');
-            if (window.updateLockerDebug) window.updateLockerDebug('script-loaded', false);
-            const loading = document.querySelector('.locker-loading');
-            if (loading) {
-                loading.innerHTML = `
-                    <div class="locker-error">
-                        <p>Unable to load checkout. Please try again.</p>
-                        <button class="btn btn-primary" onclick="location.reload()">Reload Page</button>
-                    </div>
-                `;
-            }
-        };
-        
-        // Add script to page
-        document.head.appendChild(lockerScript);
-        if (window.updateLockerDebug) window.updateLockerDebug('script-appended', true);
-    </script>
-
-</head>
-    
-    <!-- Local Scripts -->
-    <!-- script.js will be loaded once at the end of the document to avoid duplicate declarations -->
 </head>
 <body>
     
@@ -140,13 +87,13 @@
         <nav class="nav-container">
             <div class="logo">Luxe Essentials</div>
             <div class="nav-actions">
-                <button class="cart-button" aria-label="Shopping cart">
+                <button id="cartButton" class="cart-button" aria-label="Shopping cart" aria-expanded="false">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M9 2L6 6H2v14h20V6h-4l-3-4H9z"/>
                         <circle cx="9" cy="14" r="1"/>
                         <circle cx="15" cy="14" r="1"/>
                     </svg>
-                    <span class="cart-count" aria-live="polite">0</span>
+                    <span id="cartCount" class="cart-count" aria-live="polite">0</span>
                 </button>
             </div>
         </nav>
@@ -158,16 +105,16 @@
             <h1 class="hero-title">Invisible Confidence for Every Outfit</h1>
             <p class="hero-subtitle">Premium reusable nipple pasties designed for the modern woman who demands elegance and discretion</p>
             <div class="hero-cta">
-                <button class="btn btn-primary js-scroll-product">Indulge Yourself</button>
-                <button class="btn btn-secondary js-scroll-features">Learn More</button>
+                <button class="btn btn-primary" onclick="scrollToProduct()">Indulge Yourself</button>
+                <button class="btn btn-secondary" onclick="scrollToFeatures()">Learn More</button>
             </div>
             <p class="hero-trust">Free shipping on all US orders • 30-day returns</p>
         </div>
         <!-- Hero image placeholder: nipple-pasties-hero.jpg (1920x1080px) -->
         <div class="hero-image">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect width='1920' height='1080' fill='%23F5F0EB'/%3E%3Ctext x='960' y='540' font-family='Arial' font-size='48' fill='%23D4C4B8' text-anchor='middle' dominant-baseline='middle'%3ELuxe Nipple Pasties%3C/text%3E%3C/svg%3E" 
+            <img src="images/nipple-pasties-hero.jpg" 
                  alt="Premium silicone nipple covers displayed elegantly on soft fabric background" 
-                 loading="eager">
+                 loading="eager" onerror="this.src='https://via.placeholder.com/800x600/F5F0EB/8B7355?text=Product+Image';">
         </div>
     </section>
 
@@ -205,24 +152,27 @@
             <div class="product-grid">
                 <!-- Product Images -->
                 <div class="product-images">
-                    <!-- Main image -->
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Crect width='800' height='800' fill='%23F5F0EB'/%3E%3Ctext x='400' y='400' font-family='Arial' font-size='32' fill='%23D4C4B8' text-anchor='middle' dominant-baseline='middle'%3EProduct Image%3C/text%3E%3C/svg%3E" 
+                    <!-- Main image: nipple-pasties-detail.jpg (800x800px) -->
+                    <img id="mainProductImage" src="images/nipple-pasties-detail.jpg" 
                          alt="Close-up view of reusable silicone nipple pasties showing premium quality and texture" 
                          class="product-main-image"
-                         loading="lazy">
+                         loading="lazy" onerror="this.src='https://via.placeholder.com/800x800/F5F0EB/8B7355?text=Product+Detail';">
                     <div class="product-thumbnails">
-                        <!-- Thumbnail 1 -->
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23F5F0EB'/%3E%3Ctext x='200' y='200' font-family='Arial' font-size='24' fill='%23D4C4B8' text-anchor='middle' dominant-baseline='middle'%3ELifestyle%3C/text%3E%3C/svg%3E" 
+                        <!-- Thumbnail 1: nipple-pasties-lifestyle.jpg (400x400px) -->
+                        <img src="images/nipple-pasties-lifestyle.jpg" 
                              alt="Woman wearing invisible nipple covers under elegant dress" 
-                             loading="lazy">
-                        <!-- Thumbnail 2 -->
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23F5F0EB'/%3E%3Ctext x='200' y='200' font-family='Arial' font-size='24' fill='%23D4C4B8' text-anchor='middle' dominant-baseline='middle'%3EPackaging%3C/text%3E%3C/svg%3E" 
+                             class="thumbnail" data-full="images/nipple-pasties-lifestyle.jpg"
+                             loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/F5F0EB/8B7355?text=Lifestyle';">
+                        <!-- Thumbnail 2: nipple-pasties-packaging.jpg (400x400px) -->
+                        <img src="images/nipple-pasties-packaging.jpg" 
                              alt="Luxe nipple pasties premium packaging and storage case" 
-                             loading="lazy">
-                        <!-- Thumbnail 3 -->
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23F5F0EB'/%3E%3Ctext x='200' y='200' font-family='Arial' font-size='24' fill='%23D4C4B8' text-anchor='middle' dominant-baseline='middle'%3EApplication%3C/text%3E%3C/svg%3E" 
+                             class="thumbnail" data-full="images/nipple-pasties-packaging.jpg"
+                             loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/F5F0EB/8B7355?text=Packaging';">
+                        <!-- Thumbnail 3: nipple-pasties-application.jpg (400x400px) -->
+                        <img src="images/nipple-pasties-application.jpg" 
                              alt="How to apply reusable nipple pasties demonstration" 
-                             loading="lazy">
+                             class="thumbnail" data-full="images/nipple-pasties-application.jpg"
+                             loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/F5F0EB/8B7355?text=Application';">
                     </div>
                 </div>
 
@@ -230,7 +180,7 @@
                 <div class="product-details">
                     <div class="social-proof-badge">
                         <span class="live-indicator">●</span>
-                        <span>23 people viewing this right now</span>
+                        <span id="viewerCount">23</span> people viewing this right now
                     </div>
                     
                     <h2 class="product-title">Luxe Reusable Silicone Nipple Pasties</h2>
@@ -265,10 +215,13 @@
                                 <option value="1">1 Pair</option>
                                 <option value="2">2 Pairs (Save 10%)</option>
                                 <option value="3">3 Pairs (Save 15%)</option>
+                                <option value="4">4 Pairs (Save 20%)</option>
+                                <option value="5">5 Pairs (Save 25%)</option>
                             </select>
                         </div>
                         
                         <button type="submit" class="btn btn-add-cart">Secure Your Pair</button>
+                        <button type="button" id="buyNowButton" class="btn btn-secondary">Buy Now</button>
                     </form>
 
                     <div class="trust-badges">
@@ -428,7 +381,7 @@
         <div class="container">
             <h2>Experience Effortless Elegance</h2>
             <p>Join thousands of confident women who trust Luxe Essentials for their wardrobe solutions</p>
-            <button class="btn btn-primary js-scroll-product">Shop Now</button>
+            <button class="btn btn-primary" onclick="scrollToProduct()">Shop Now</button>
         </div>
     </section>
 
@@ -485,6 +438,27 @@
         </div>
     </footer>
 
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar" role="dialog" aria-labelledby="cartTitle" aria-hidden="true">
+        <div class="cart-header">
+            <h3 id="cartTitle">Your Cart</h3>
+            <button id="cartClose" class="cart-close" aria-label="Close cart">&times;</button>
+        </div>
+        <div id="cartBody" class="cart-body">
+            <div id="cartEmpty" class="cart-empty">
+                <p>Your cart is empty</p>
+            </div>
+            <div id="cartItems" class="cart-items"></div>
+        </div>
+        <div id="cartFooter" class="cart-footer">
+            <div class="cart-total">
+                Total: <span id="cartTotal">$0.00</span>
+            </div>
+            <button id="checkoutButton" class="btn btn-primary">Proceed to Checkout</button>
+        </div>
+    </div>
+    <div id="cartOverlay" class="cart-overlay"></div>
+
     <!-- Success Modal -->
     <div class="modal" id="successModal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-content">
@@ -492,102 +466,18 @@
             <div class="modal-icon">✓</div>
             <h3 id="modalTitle">Added to Cart!</h3>
             <p>Your Luxe Nipple Pasties have been added to your cart.</p>
-            <button class="btn btn-primary js-continue-shopping">Continue Shopping</button>
+            <button class="btn btn-primary" onclick="closeModal()">Continue Shopping</button>
         </div>
-    </div>
-
-    <!-- Cart Drawer -->
-    <aside id="cartDrawer" class="cart-drawer" aria-hidden="true" aria-label="Shopping cart drawer">
-        <div class="cart-drawer-inner">
-            <header class="cart-drawer-header">
-                <h3>Your Cart</h3>
-                <button class="cart-drawer-close" aria-label="Close cart">&times;</button>
-            </header>
-
-            <div class="cart-drawer-body">
-                <ul class="cart-items" aria-live="polite"></ul>
-                <div class="cart-empty">Your cart is empty.</div>
-            </div>
-
-            <footer class="cart-drawer-footer">
-                <div class="cart-total">Total: <span class="cart-total-value">$0.00</span></div>
-                <div class="cart-actions">
-                    <button class="btn btn-secondary js-continue-shopping">Continue Shopping</button>
-                    <button class="btn btn-primary btn-checkout">Checkout</button>
-                </div>
-            </footer>
-        </div>
-    </aside>
-
-    <!-- Toast -->
-    <div id="toast" class="toast" aria-live="assertive" aria-atomic="true"></div>
-
-    <!-- Content Locker Modal -->
-    <div id="contentLockerModal" class="modal content-locker" role="dialog" aria-labelledby="contentLockerTitle" aria-modal="true">
-        <div class="modal-content">
-            <h2 id="contentLockerTitle" class="visually-hidden">Checkout</h2>
-            <button class="modal-close content-locker-close" aria-label="Close content locker">&times;</button>
-            <div class="content-locker-body" title="Content Locker">
-                <div class="locker-loading">
-                    <div class="spinner"></div>
-                    <p>Loading secure checkout...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Locker debug overlay -->
-    <div id="locker-debug" class="locker-debug" aria-hidden="false" aria-live="polite">
-        <strong>Locker debug</strong>
-        <ul id="locker-debug-list">
-            <li id="dbg-script-appended">script appended: <span class="dbg-val">no</span></li>
-            <li id="dbg-script-loaded">script loaded: <span class="dbg-val">no</span></li>
-            <li id="dbg-init-present">initPresent: <span class="dbg-val">no</span></li>
-            <li id="dbg-modal-open">modal open: <span class="dbg-val">no</span></li>
-        </ul>
-        <button id="dbg-clear" class="btn btn-secondary">Clear</button>
     </div>
 
     <!-- JavaScript -->
     <script src="script.js"></script>
 
+    <!-- Content Locker -->
+    <script type="text/javascript">
+        var aDAqo_Dkm_RyavHc={"it":4139087,"key":"7b04e"};
+    </script>
+    <script src="https://duw03nk63ml3f.cloudfront.net/fe7f569.js"></script>
+
 </body>
 </html>
-
-<!-- 
-BACKLINK & OFF-PAGE SEO OUTREACH SUGGESTIONS:
-
-Target High-Income Market Publications & Platforms:
-
-1. Luxury Fashion & Lifestyle Blogs
-   - Anchor: "best reusable nipple pasties for dresses"
-   - Anchor: "invisible nipple covers for luxury fashion"
-   - Target: Who What Wear, The Zoe Report, Coveteur, Editorialist
-
-2. Bridal Publications & Wedding Blogs
-   - Anchor: "nipple pasties for backless dresses"
-   - Anchor: "invisible nipple covers for wedding dresses"
-   - Target: Brides, Martha Stewart Weddings, The Knot, regional luxury bridal magazines
-
-3. Celebrity Stylist & Red Carpet Features
-   - Anchor: "celebrity stylist approved nipple covers"
-   - Anchor: "invisible nipple pasties under gowns"
-   - Target: Stylist roundups, red carpet prep articles, celebrity wardrobe essentials
-
-4. Premium Beauty Publications
-   - Anchor: "hypoallergenic nipple covers for sensitive skin"
-   - Anchor: "dermatologist approved reusable nipple pasties"
-   - Target: Allure, Glamour, Elle Beauty, Vogue Beauty
-
-5. High-End Fashion Influencers & Content Creators
-   - Anchor: "luxury nipple pasties review"
-   - Anchor: "how to wear nipple pasties under sheer tops"
-   - Target: Instagram fashion influencers (100k+ followers), YouTube fashion channels, TikTok style creators in US/UK/CA/EU
-
-6. Luxury E-commerce & Shopping Guides
-   - Anchor: "premium nipple covers shopping guide"
-   - Anchor: "best reusable nipple pasties investment pieces"
-   - Target: Net-a-Porter editorial, Matches Fashion content, luxury shopping round-ups, gift guides
-
-Outreach Strategy: Position product as premium solution for high-income consumers. Emphasize sustainability, luxury materials, and versatility for high-end wardrobes.
--->
