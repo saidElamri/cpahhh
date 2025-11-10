@@ -8,7 +8,7 @@ let exitIntentShown = false;
 // DOM Elements
 let purchaseForm, modal, cartCountElement, quantitySelect, submitButton;
 let cartButton, cartSidebar, cartOverlay, cartClose, cartBody, cartItemsContainer, cartFooter, cartTotal;
-let checkoutButton, buyNowButton;
+let checkoutButton;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
@@ -47,9 +47,8 @@ function initializeDOMElements() {
         cartItemsContainer = document.getElementById('cartItems');
         cartFooter = document.getElementById('cartFooter');
         cartTotal = document.getElementById('cartTotal');
-        
+
         checkoutButton = document.getElementById('checkoutButton');
-        buyNowButton = document.getElementById('buyNowButton');
     } catch (error) {
         console.error('Error initializing DOM elements:', error);
         throw error;
@@ -105,10 +104,6 @@ function initializeEventListeners() {
         
         if (checkoutButton) {
             checkoutButton.addEventListener('click', handleCheckout);
-        }
-        
-        if (buyNowButton) {
-            buyNowButton.addEventListener('click', handleBuyNow);
         }
 
         const heroCTA = document.querySelector('.hero-cta');
@@ -467,8 +462,12 @@ function handleAddToCart(e) {
         try {
             const quantity = parseInt(quantitySelect.value);
             addToCart(quantity);
-            showModal();
             trackAddToCart(quantity);
+
+            // Open cart immediately after adding item
+            setTimeout(() => {
+                openCart();
+            }, 300);
         } catch (error) {
             console.error('Error during cart operation:', error);
             showFormError('Could not add item to cart. Please try again.');
@@ -684,32 +683,8 @@ function removeCartItem(index) {
     }
 }
 
-// Handle Buy Now
-function handleBuyNow() {
-    try {
-        const qtyInput = document.getElementById('quantity');
-        if (!qtyInput) {
-            showFormError('Quantity selector not found');
-            return;
-        }
-        
-        const quantity = parseInt(qtyInput.value) || 1;
-        
-        if (isNaN(quantity) || quantity < 1 || quantity < 10) {
-            showFormError('Please select a valid quantity (1-10)');
-            return;
-        }
-        
-        addToCart(quantity);
-        
-        setTimeout(() => {
-            handleCheckout();
-        }, 300);
-    } catch (error) {
-        console.error('Error handling buy now:', error);
-        showError('Error processing buy now. Please try again.');
-    }
-}
+// Handle Buy Now (removed - simplified to single Add to Cart button)
+// function handleBuyNow() { }
 
 // Handle Checkout
 function handleCheckout() {
@@ -960,8 +935,6 @@ function initializeQuantityControls() {
     try {
         const qtyInput = document.getElementById('quantity');
         const qtyOptions = document.querySelectorAll('.qty-option');
-        const minusBtn = document.querySelector('.qty-btn.minus');
-        const plusBtn = document.querySelector('.qty-btn.plus');
 
         if (!qtyInput) return;
 
@@ -974,38 +947,7 @@ function initializeQuantityControls() {
                 this.classList.add('active');
             });
         });
-
-        if (minusBtn) {
-            minusBtn.addEventListener('click', () => {
-                let currentQty = parseInt(qtyInput.value);
-                if (currentQty > 1) {
-                    qtyInput.value = currentQty - 1;
-                    updateActiveQtyOption(currentQty - 1);
-                }
-            });
-        }
-
-        if (plusBtn) {
-            plusBtn.addEventListener('click', () => {
-                let currentQty = parseInt(qtyInput.value);
-                if (currentQty < 10) {
-                    qtyInput.value = currentQty + 1;
-                    updateActiveQtyOption(currentQty + 1);
-                }
-            });
-        }
     } catch (error) {
         console.error('Error initializing quantity controls:', error);
     }
-}
-
-function updateActiveQtyOption(qty) {
-    const qtyOptions = document.querySelectorAll('.qty-option');
-    qtyOptions.forEach(option => {
-        if (parseInt(option.dataset.qty) === qty) {
-            option.classList.add('active');
-        } else {
-            option.classList.remove('active');
-        }
-    });
 }
