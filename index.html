@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,10 +9,6 @@
     <meta name="description" content="Premium silicone nipple pasties for elegant confidence. Reusable, hypoallergenic, invisible under any outfit. Free shipping to US, UK, CA, EU.">
     <link rel="canonical" href="https://www.example.com/nipple-pasties">
     
-    <!-- Hreflang Tags -->
-    <link rel="alternate" hreflang="en-US" href="https://www.example.com/nipple-pasties">
-    <link rel="alternate" hreflang="en-GB" href="https://www.example.com/uk/nipple-pasties">
-    
     <!-- Open Graph Tags -->
     <meta property="og:title" content="Luxe Reusable Nipple Pasties | Invisible Covers">
     <meta property="og:description" content="Premium silicone nipple pasties for elegant confidence. Reusable, hypoallergenic, invisible under any outfit.">
@@ -21,29 +16,16 @@
     <meta property="og:url" content="https://www.example.com/nipple-pasties">
     <meta property="og:type" content="product">
     
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Luxe Reusable Nipple Pasties | Invisible Covers">
-    <meta name="twitter:description" content="Premium silicone nipple pasties for elegant confidence. Reusable, hypoallergenic, invisible under any outfit.">
-    <meta name="twitter:image" content="https://www.example.com/images/nipple-pasties-hero.jpg">
-    
     <!-- Structured Data JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
       "@type": "Product",
       "name": "Luxe Reusable Silicone Nipple Pasties",
-      "description": "Premium medical-grade silicone nipple covers that are reusable, hypoallergenic, and invisible under any outfit. Perfect for dresses, sheer tops, and backless attire.",
-      "image": [
-        "https://www.example.com/images/nipple-pasties-hero.jpg",
-        "https://www.example.com/images/nipple-pasties-detail.jpg",
-        "https://www.example.com/images/nipple-pasties-lifestyle.jpg"
-      ],
+      "description": "Premium medical-grade silicone nipple covers that are reusable, hypoallergenic, and invisible under any outfit.",
+      "image": ["https://www.example.com/images/nipple-pasties-hero.jpg"],
       "sku": "NP-LUXE-001",
-      "brand": {
-        "@type": "Brand",
-        "name": "Luxe Essentials"
-      },
+      "brand": {"@type": "Brand", "name": "Luxe Essentials"},
       "offers": {
         "@type": "Offer",
         "url": "https://www.example.com/nipple-pasties",
@@ -53,11 +35,7 @@
         "availability": "https://schema.org/InStock",
         "itemCondition": "https://schema.org/NewCondition"
       },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "347"
-      }
+      "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "347"}
     }
     </script>
     
@@ -69,16 +47,8 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="index.css">
     
-    <!-- Google Analytics Placeholder -->
-    <!-- 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
-    -->
+    <!-- Tidio Live Chat Widget -->
+    <script src="https://code.tidio.co/bfisvixn0xolusgo0pl2btfzgiwkamqr.js" async></script>
 </head>
 <body>
     
@@ -99,291 +69,441 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Invisible Confidence for Every Outfit</h1>
-            <p class="hero-subtitle">Premium reusable nipple pasties designed for the modern woman who demands elegance and discretion</p>
-            <div class="hero-cta">
-                <button class="btn btn-primary" onclick="scrollToProduct()">Indulge Yourself</button>
-                <button class="btn btn-secondary" onclick="scrollToFeatures()">Learn More</button>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Invisible Confidence for Every Outfit</h1>
+                <p class="hero-subtitle">Premium reusable nipple pasties designed for the modern woman who demands elegance and discretion</p>
+                <div class="hero-cta">
+                    <button class="btn btn-primary" data-action="scrollToProduct">Get My Luxe Pasties Now</button>
+                    <button class="btn btn-secondary" data-action="scrollToFeatures">Learn More</button>
+                </div>
+                <p class="hero-trust">✓ Ships within 24 hours • ✓ 30-day guarantee • ✓ Free US shipping</p>
             </div>
-            <p class="hero-trust">Free shipping on all US orders • 30-day returns</p>
-        </div>
-        <!-- Hero image placeholder: nipple-pasties-hero.jpg (1920x1080px) -->
-        <div class="hero-image">
-            <img src="images/nipple-pasties-hero.jpg" 
-                 alt="Premium silicone nipple covers displayed elegantly on soft fabric background" 
-                 loading="eager" onerror="this.src='https://via.placeholder.com/800x600/F5F0EB/8B7355?text=Product+Image';">
-        </div>
-    </section>
+            <div class="hero-image">
+                <img src="images/nipple-pasties-hero.jpg" 
+                     alt="Premium silicone nipple covers displayed elegantly on soft fabric background" 
+                     loading="eager" onerror="this.src='https://via.placeholder.com/800x600/F5F0EB/8B7355?text=Product+Image';">
+            </div>
+        </section>
 
-    <!-- USP Section -->
-    <section class="usp-section">
-        <div class="container">
-            <div class="usp-grid">
-                <div class="usp-item">
-                    <div class="usp-icon">✓</div>
-                    <h3>Medical-Grade Silicone</h3>
-                    <p>Hypoallergenic and safe for sensitive skin</p>
-                </div>
-                <div class="usp-item">
-                    <div class="usp-icon">♻</div>
-                    <h3>Reusable Up to 50+ Wears</h3>
-                    <p>Sustainable luxury that pays for itself</p>
-                </div>
-                <div class="usp-item">
-                    <div class="usp-icon">👗</div>
-                    <h3>Truly Invisible</h3>
-                    <p>Seamless under sheer, silk, and tight fabrics</p>
-                </div>
-                <div class="usp-item">
-                    <div class="usp-icon">🔒</div>
-                    <h3>All-Day Hold</h3>
-                    <p>Stay confident from morning to midnight</p>
+        <!-- USP Section -->
+        <section class="usp-section">
+            <div class="container">
+                <div class="usp-grid">
+                    <div class="usp-item">
+                        <div class="usp-icon">✓</div>
+                        <h3>Medical-Grade Silicone</h3>
+                        <p>Hypoallergenic and safe for sensitive skin</p>
+                    </div>
+                    <div class="usp-item">
+                        <div class="usp-icon">♻</div>
+                        <h3>Reusable Up to 50+ Wears</h3>
+                        <p>Sustainable luxury that pays for itself</p>
+                    </div>
+                    <div class="usp-item">
+                        <div class="usp-icon">👗</div>
+                        <h3>Truly Invisible</h3>
+                        <p>Seamless under sheer, silk, and tight fabrics</p>
+                    </div>
+                    <div class="usp-item">
+                        <div class="usp-icon">🔒</div>
+                        <h3>All-Day Hold</h3>
+                        <p>Stay confident from morning to midnight</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Product Section -->
-    <section class="product-section" id="product">
-        <div class="container">
-            <div class="product-grid">
-                <!-- Product Images -->
-                <div class="product-images">
-                    <!-- Main image: nipple-pasties-detail.jpg (800x800px) -->
-                    <img id="mainProductImage" src="images/nipple-pasties-detail.jpg" 
-                         alt="Close-up view of reusable silicone nipple pasties showing premium quality and texture" 
-                         class="product-main-image"
-                         loading="lazy" onerror="this.src='https://via.placeholder.com/800x800/F5F0EB/8B7355?text=Product+Detail';">
-                    <div class="product-thumbnails">
-                        <!-- Thumbnail 1: nipple-pasties-lifestyle.jpg (400x400px) -->
-                        <img src="images/nipple-pasties-lifestyle.jpg" 
-                             alt="Woman wearing invisible nipple covers under elegant dress" 
-                             class="thumbnail" data-full="images/nipple-pasties-lifestyle.jpg"
-                             loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/F5F0EB/8B7355?text=Lifestyle';">
-                        <!-- Thumbnail 2: nipple-pasties-packaging.jpg (400x400px) -->
-                        <img src="images/nipple-pasties-packaging.jpg" 
-                             alt="Luxe nipple pasties premium packaging and storage case" 
-                             class="thumbnail" data-full="images/nipple-pasties-packaging.jpg"
-                             loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/F5F0EB/8B7355?text=Packaging';">
-                        <!-- Thumbnail 3: nipple-pasties-application.jpg (400x400px) -->
-                        <img src="images/nipple-pasties-application.jpg" 
-                             alt="How to apply reusable nipple pasties demonstration" 
-                             class="thumbnail" data-full="images/nipple-pasties-application.jpg"
-                             loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/F5F0EB/8B7355?text=Application';">
-                    </div>
-                </div>
+        <!-- Product Section -->
+        <section class="product-section" id="product">
+            <div class="container">
+                <div class="product-grid">
+                    <figure class="product-images">
+                        <img id="mainProductImage" src="images/nipple-pasties-detail.jpg" 
+                             alt="Close-up view of reusable silicone nipple pasties showing premium quality and texture" 
+                             class="product-main-image"
+                             loading="lazy" onerror="this.src='https://via.placeholder.com/800x800/F5F0EB/8B7355?text=Product+Detail';">
+                        <figcaption class="visually-hidden">Luxe Reusable Silicone Nipple Pasties</figcaption>
+                        <div class="product-thumbnails">
+                            <img src="images/nipple-pasties-lifestyle.jpg" 
+                                 alt="Woman wearing invisible nipple covers under elegant dress" 
+                                 class="thumbnail" data-full="images/nipple-pasties-lifestyle.jpg"
+                                 loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/F5F0EB/8B7355?text=Lifestyle';"
+                                 role="button" tabindex="0" aria-label="View lifestyle image">
+                            <img src="images/nipple-pasties-packaging.jpg" 
+                                 alt="Luxe nipple pasties premium packaging and storage case" 
+                                 class="thumbnail" data-full="images/nipple-pasties-packaging.jpg"
+                                 loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/F5F0EB/8B7355?text=Packaging';"
+                                 role="button" tabindex="0" aria-label="View packaging image">
+                            <img src="images/nipple-pasties-application.jpg" 
+                                 alt="How to apply reusable nipple pasties demonstration" 
+                                 class="thumbnail" data-full="images/nipple-pasties-application.jpg"
+                                 loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/F5F0EB/8B7355?text=Application';"
+                                 role="button" tabindex="0" aria-label="View application image">
+                        </div>
+                    </figure>
 
-                <!-- Product Details -->
-                <div class="product-details">
-                    <div class="social-proof-badge">
-                        <span class="live-indicator">●</span>
-                        <span id="viewerCount">23</span> people viewing this right now
-                    </div>
-                    
-                    <h2 class="product-title">Luxe Reusable Silicone Nipple Pasties</h2>
-                    
-                    <div class="product-rating">
-                        <span class="stars">★★★★★</span>
-                        <span class="rating-text">4.8 (347 reviews)</span>
-                    </div>
+                    <!-- Product Details -->
+                    <article class="product-details">
+                        <!-- Delivery Urgency - NEW -->
+                        <div class="delivery-urgency" id="deliveryUrgency">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E74C3C" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <span>Order within <strong id="urgencyTime">3h 24m</strong> for delivery by <strong id="deliveryDate">Nov 14</strong></span>
+                        </div>
 
-                    <p class="product-description">
-                        Experience unparalleled comfort and confidence with our best reusable nipple pasties for dresses. 
-                        Crafted from premium medical-grade silicone, these invisible nipple covers provide seamless coverage 
-                        under any outfit while remaining gentle on even the most sensitive skin.
-                    </p>
-
-                    <div class="price-block">
-                        <div class="price">$29.99 <span class="currency-note">USD</span></div>
-                        <div class="price-alternatives">Also available: £24.99 GBP • €27.99 EUR</div>
-                    </div>
-
-                    <div class="stock-indicator">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="#E74C3C">
-                            <circle cx="8" cy="8" r="6"/>
-                        </svg>
-                        <span>Only 8 left in stock — order soon</span>
-                    </div>
-
-                    <form class="add-to-cart-form" id="purchaseForm">
-                        <div class="quantity-selector">
-                            <label for="quantity">Quantity:</label>
-                            <select id="quantity" name="quantity">
-                                <option value="1">1 Pair</option>
-                                <option value="2">2 Pairs (Save 10%)</option>
-                                <option value="3">3 Pairs (Save 15%)</option>
-                                <option value="4">4 Pairs (Save 20%)</option>
-                                <option value="5">5 Pairs (Save 25%)</option>
-                            </select>
+                        <div class="social-proof-badge">
+                            <span class="live-indicator">●</span>
+                            <span id="viewerCount">23</span> people viewing this right now
                         </div>
                         
-                        <button type="submit" class="btn btn-add-cart">Secure Your Pair</button>
-                        <button type="button" id="buyNowButton" class="btn btn-secondary">Buy Now</button>
-                    </form>
+                        <!-- Recent Purchase Notification - NEW -->
+                        <div class="recent-purchase" id="recentPurchase" style="display: none;">
+                            <span class="purchase-icon">🛍️</span>
+                            <span class="purchase-text"></span>
+                        </div>
+                        
+                        <h2 class="product-title">Luxe Reusable Silicone Nipple Pasties</h2>
+                        
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">4.8 (347 reviews)</span>
+                        </div>
 
-                    <div class="trust-badges">
-                        <div class="badge">
-                            <span class="badge-icon">✓</span>
-                            <span>30-Day Money Back</span>
+                        <p class="product-description">
+                            Experience unparalleled comfort and confidence with our best reusable nipple pasties for dresses. 
+                            Crafted from premium medical-grade silicone, these invisible nipple covers provide seamless coverage 
+                            under any outfit while remaining gentle on even the most sensitive skin.
+                        </p>
+
+                        <div class="price-block">
+                            <div class="price">$29.99 <span class="currency-note">USD</span></div>
+                            <div class="price-alternatives">Also available: £24.99 GBP • €27.99 EUR</div>
                         </div>
-                        <div class="badge">
-                            <span class="badge-icon">🚚</span>
-                            <span>Free US Shipping</span>
+
+                        <!-- Dynamic Stock Indicator - ENHANCED -->
+                        <div class="stock-indicator" id="stockIndicator">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#E74C3C">
+                                <circle cx="8" cy="8" r="6"/>
+                            </svg>
+                            <span id="stockMessage">Only 8 pairs left in stock — order soon</span>
                         </div>
-                        <div class="badge">
-                            <span class="badge-icon">🔒</span>
-                            <span>Secure Checkout</span>
+
+                        <form class="add-to-cart-form" id="purchaseForm">
+                            <div class="quantity-selector">
+                                <label for="quantity">Quantity:</label>
+                                <div class="quantity-controls">
+                                    <button type="button" class="qty-btn minus" aria-label="Decrease quantity">-</button>
+                                    <input type="text" id="quantity" name="quantity" value="2" min="1" max="10" readonly>
+                                    <button type="button" class="qty-btn plus" aria-label="Increase quantity">+</button>
+                                </div>
+                            </div>
+                            <!-- Visual Quantity Selector - NEW -->
+                            <div class="qty-visual-selector">
+                                <button type="button" class="qty-option" data-qty="1">
+                                    <span class="qty-num">1 Pair</span>
+                                    <span class="qty-price">$29.99</span>
+                                </button>
+                                <button type="button" class="qty-option popular active" data-qty="2">
+                                    <span class="badge">Most Popular</span>
+                                    <span class="qty-num">2 Pairs</span>
+                                    <span class="qty-price">$26.99 each <small>Save 10%</small></span>
+                                </button>
+                                <button type="button" class="qty-option" data-qty="3">
+                                    <span class="qty-num">3 Pairs</span>
+                                    <span class="qty-price">$25.49 each <small>Save 15%</small></span>
+                                </button>
+                            </div>
+                            
+                            <input type="hidden" id="quantity-hidden" name="quantity" value="2">
+                            
+                            <button type="submit" class="btn btn-add-cart">Get My Luxe Pasties Now</button>
+                            <p class="cta-microcopy">✓ Ships within 24 hours • ✓ 30-day money-back guarantee</p>
+                            <button type="button" id="buyNowButton" class="btn btn-secondary">Buy Now</button>
+                        </form>
+
+                        <!-- Enhanced Trust Badges - NEW -->
+                        <div class="trust-bar">
+                            <div class="trust-item">
+                                <span class="badge-icon">🔒</span>
+                                <span>SSL Secured</span>
+                            </div>
+                            <div class="trust-item">
+                                <span class="badge-icon">💳</span>
+                                <span>All Cards Accepted</span>
+                            </div>
+                            <div class="trust-item">
+                                <span class="stars-small">★★★★★</span>
+                                <span>4.8/5 Trustpilot</span>
+                            </div>
+                            <div class="trust-item">
+                                <span class="badge-icon">📰</span>
+                                <span>Featured in Vogue</span>
+                            </div>
                         </div>
-                        <div class="badge">
-                            <span class="badge-icon">⚕️</span>
-                            <span>Dermatologist Approved</span>
+
+                        <div class="trust-badges">
+                            <div class="badge">
+                                <span class="badge-icon">✓</span>
+                                <span>30-Day Money Back</span>
+                            </div>
+                            <div class="badge">
+                                <span class="badge-icon">🚚</span>
+                                <span>Free US Shipping</span>
+                            </div>
+                            <div class="badge">
+                                <span class="badge-icon">🔒</span>
+                                <span>Secure Checkout</span>
+                            </div>
+                            <div class="badge">
+                                <span class="badge-icon">⚕️</span>
+                                <span>Dermatologist Approved</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Table - NEW -->
+        <section class="comparison-section">
+            <div class="container">
+                <h2 class="section-title">Why Choose Luxe Over Disposables?</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Luxe Pasties</th>
+                            <th>Disposable Alternatives</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cost per wear</strong></td>
+                            <td class="highlight">$0.60</td>
+                            <td>$3-5</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Number of uses</strong></td>
+                            <td class="highlight">50+ wears</td>
+                            <td>Single use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Environmental impact</strong></td>
+                            <td class="highlight">✓ Sustainable</td>
+                            <td>✗ Wasteful</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comfort</strong></td>
+                            <td class="highlight">✓ Ultra-soft silicone</td>
+                            <td>✗ Adhesive irritation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hold strength</strong></td>
+                            <td class="highlight">✓ All-day secure</td>
+                            <td>~ May slip</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Guarantee Section - NEW -->
+        <section class="guarantee-section">
+            <div class="container">
+                <div class="guarantee-box">
+                    <h2>🛡️ Our Promise to You</h2>
+                    <ul class="guarantee-list">
+                        <li>
+                            <strong>30-Day Money-Back Guarantee</strong>
+                            <p>Not satisfied? Full refund, no questions asked</p>
+                        </li>
+                        <li>
+                            <strong>Free Returns</strong>
+                            <p>Easy, prepaid return label included</p>
+                        </li>
+                        <li>
+                            <strong>Discreet Packaging</strong>
+                            <p>Privacy guaranteed with unmarked shipping</p>
+                        </li>
+                        <li>
+                            <strong>Secure Checkout</strong>
+                            <p>256-bit SSL encryption protects your data</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section class="features-section" id="features">
+            <div class="container">
+                <h2 class="section-title">Why Women Choose Our Nipple Covers</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Hypoallergenic Nipple Covers for Sensitive Skin</h3>
+                        <p>Our medical-grade silicone is dermatologist-tested and free from latex, adhesives, and harsh chemicals. 
+                        Perfect for those with skin sensitivities or allergies who refuse to compromise on comfort.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Reusable & Sustainable</h3>
+                        <p>Unlike disposable alternatives, each pair delivers 50+ wears with proper care. Self-adhesive technology 
+                        that washes clean with mild soap and water, maintaining its grip wear after wear.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>All-Day Secure Hold</h3>
+                        <p>Advanced silicone adhesive technology keeps pasties firmly in place for 12+ hours. Dance, work out, 
+                        or simply live your life without worry. No slipping, no adjusting, just confidence.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Invisible Under Everything</h3>
+                        <p>Ultra-thin edges taper seamlessly to your skin, creating zero visible lines under silk, satin, bodycon, 
+                        or sheer fabrics. Available in multiple skin tone shades for truly invisible coverage.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Use Section -->
+        <section class="how-to-section">
+            <div class="container">
+                <h2 class="section-title">How to Wear Nipple Pasties Under Sheer Tops</h2>
+                
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Prepare Your Skin</h3>
+                        <p>Ensure skin is clean, dry, and free from lotions or oils. Pat completely dry for maximum adhesion.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Apply with Care</h3>
+                        <p>Remove protective film and center the pastie over your nipple. Press firmly for 10 seconds, smoothing from center outward.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Remove & Store</h3>
+                        <p>Gently peel from edges. Rinse with mild soap and lukewarm water. Air dry adhesive-side up, then return to storage case.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <h3 class="faq-question">Are silicone nipple covers safe for sensitive skin?</h3>
+                        <div class="faq-answer">
+                            <p>Yes! Our pasties are made from medical-grade silicone that's hypoallergenic, latex-free, and dermatologist-tested. 
+                            They're specifically designed for sensitive skin and won't cause irritation or allergic reactions.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Are these nipple pasties for backless dresses?</h3>
+                        <div class="faq-answer">
+                            <p>Absolutely! Our silicone nipple covers are specifically designed to work with backless, strapless, 
+                            and low-cut styles. The self-adhesive design requires no straps or support, making them ideal for 
+                            wedding dresses, evening gowns, and summer attire.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">How long do reusable nipple pasties last?</h3>
+                        <div class="faq-answer">
+                            <p>With proper care, each pair lasts 50-100 wears. After each use, simply wash with mild soap and water, 
+                            air dry adhesive-side up, and store in the included protective case. Adhesion may decrease over time but 
+                            can often be restored with proper cleaning.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">Will they show under tight or light-colored clothing?</h3>
+                        <div class="faq-answer">
+                            <p>Our ultra-thin tapered edges are virtually undetectable under all fabrics, including white, nude, 
+                            and tight-fitting clothes. The matte finish eliminates shine, and the skin-tone options ensure complete 
+                            invisibility under sheer materials.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">How do I clean and maintain my reusable pasties?</h3>
+                        <div class="faq-answer">
+                            <p>After each wear, gently hand wash with lukewarm water and mild soap. Let air dry completely with the adhesive side facing up. 
+                            Once dry, place them back in the protective storage case. Avoid using lotions or oils before application to maintain optimal adhesion.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">What's your shipping and return policy?</h3>
+                        <div class="faq-answer">
+                            <p>We offer free shipping on all US orders, with delivery in 3-5 business days. International shipping is available to UK, Canada, EU, UAE, and KSA. 
+                            We have a 30-day money-back guarantee - if you're not completely satisfied, return for a full refund, no questions asked.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Key Features Section -->
-    <section class="features-section" id="features">
-        <div class="container">
-            <h2 class="section-title">Why Women Choose Our Nipple Covers</h2>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>Hypoallergenic Nipple Covers for Sensitive Skin</h3>
-                    <p>Our medical-grade silicone is dermatologist-tested and free from latex, adhesives, and harsh chemicals. 
-                    Perfect for those with skin sensitivities or allergies who refuse to compromise on comfort.</p>
-                </div>
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <div class="container">
+                <h2 class="section-title">What Our Customers Are Saying</h2>
                 
-                <div class="feature-card">
-                    <h3>Reusable & Sustainable</h3>
-                    <p>Unlike disposable alternatives, each pair delivers 50+ wears with proper care. Self-adhesive technology 
-                    that washes clean with mild soap and water, maintaining its grip wear after wear.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3>All-Day Secure Hold</h3>
-                    <p>Advanced silicone adhesive technology keeps pasties firmly in place for 12+ hours. Dance, work out, 
-                    or simply live your life without worry. No slipping, no adjusting, just confidence.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3>Invisible Under Everything</h3>
-                    <p>Ultra-thin edges taper seamlessly to your skin, creating zero visible lines under silk, satin, bodycon, 
-                    or sheer fabrics. Available in multiple skin tone shades for truly invisible coverage.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-section">
-        <div class="container">
-            <h2 class="section-title">How to Wear Nipple Pasties Under Sheer Tops</h2>
-            
-            <div class="steps-grid">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Prepare Your Skin</h3>
-                    <p>Ensure skin is clean, dry, and free from lotions or oils. Pat completely dry for maximum adhesion.</p>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Apply with Care</h3>
-                    <p>Remove protective film and center the pastie over your nipple. Press firmly for 10 seconds, smoothing from center outward.</p>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Remove & Store</h3>
-                    <p>Gently peel from edges. Rinse with mild soap and lukewarm water. Air dry adhesive-side up, then return to storage case.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            
-            <div class="faq-list">
-                <div class="faq-item">
-                    <h3 class="faq-question">Are these nipple pasties for backless dresses?</h3>
-                    <div class="faq-answer">
-                        <p>Absolutely! Our silicone nipple covers are specifically designed to work with backless, strapless, 
-                        and low-cut styles. The self-adhesive design requires no straps or support, making them ideal for 
-                        wedding dresses, evening gowns, and summer attire.</p>
+                <div class="reviews-grid">
+                    <div class="review-card">
+                        <div class="review-rating">★★★★★</div>
+                        <span class="verified-badge">✓ Verified Purchase</span>
+                        <p class="review-text">"Finally found nipple covers that actually stay put! Wore these to a wedding in a silk 
+                        slip dress and felt completely confident all night. No visible lines whatsoever and they're so comfortable 
+                        I forgot I was wearing them."</p>
+                        <p class="review-author">— Jessica M., New York</p>
                     </div>
-                </div>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">How long do reusable nipple pasties last?</h3>
-                    <div class="faq-answer">
-                        <p>With proper care, each pair lasts 50-100 wears. After each use, simply wash with mild soap and water, 
-                        air dry adhesive-side up, and store in the included protective case. Adhesion may decrease over time but 
-                        can often be restored with proper cleaning.</p>
+                    
+                    <div class="review-card">
+                        <div class="review-rating">★★★★★</div>
+                        <span class="verified-badge">✓ Verified Purchase</span>
+                        <p class="review-text">"I have extremely sensitive skin and these are the only pasties that don't irritate me. 
+                        Plus they're reusable which makes them so much better value than the disposable ones I used to buy every month. 
+                        Game changer!"</p>
+                        <p class="review-author">— Sarah K., London</p>
                     </div>
-                </div>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">Will they show under tight or light-colored clothing?</h3>
-                    <div class="faq-answer">
-                        <p>Our ultra-thin tapered edges are virtually undetectable under all fabrics, including white, nude, 
-                        and tight-fitting clothes. The matte finish eliminates shine, and the skin-tone options ensure complete 
-                        invisibility under sheer materials.</p>
+                    
+                    <div class="review-card">
+                        <div class="review-rating">★★★★★</div>
+                        <span class="verified-badge">✓ Verified Purchase</span>
+                        <p class="review-text">"Luxurious quality and they genuinely work. I was skeptical about the price but after 
+                        three months of regular use they're still going strong. The investment is worth it for the confidence alone. 
+                        Already bought a second pair as backup."</p>
+                        <p class="review-author">— Amanda R., Toronto</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Reviews Section -->
-    <section class="reviews-section">
-        <div class="container">
-            <h2 class="section-title">What Our Customers Are Saying</h2>
-            
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="review-rating">★★★★★</div>
-                    <p class="review-text">"Finally found nipple covers that actually stay put! Wore these to a wedding in a silk 
-                    slip dress and felt completely confident all night. No visible lines whatsoever and they're so comfortable 
-                    I forgot I was wearing them."</p>
-                    <p class="review-author">— Jessica M., New York</p>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-rating">★★★★★</div>
-                    <p class="review-text">"I have extremely sensitive skin and these are the only pasties that don't irritate me. 
-                    Plus they're reusable which makes them so much better value than the disposable ones I used to buy every month. 
-                    Game changer!"</p>
-                    <p class="review-author">— Sarah K., London</p>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-rating">★★★★★</div>
-                    <p class="review-text">"Luxurious quality and they genuinely work. I was skeptical about the price but after 
-                    three months of regular use they're still going strong. The investment is worth it for the confidence alone. 
-                    Already bought a second pair as backup."</p>
-                    <p class="review-author">— Amanda R., Toronto</p>
-                </div>
+        <!-- Final CTA Section -->
+        <section class="final-cta">
+            <div class="container">
+                <h2>Experience Effortless Elegance</h2>
+                <p>Join thousands of confident women who trust Luxe Essentials for their wardrobe solutions</p>
+                <button class="btn btn-primary" data-action="scrollToProduct">Shop Now</button>
             </div>
-        </div>
-    </section>
-
-    <!-- Final CTA Section -->
-    <section class="final-cta">
-        <div class="container">
-            <h2>Experience Effortless Elegance</h2>
-            <p>Join thousands of confident women who trust Luxe Essentials for their wardrobe solutions</p>
-            <button class="btn btn-primary" onclick="scrollToProduct()">Shop Now</button>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -425,7 +545,7 @@
                         <a href="#pinterest" aria-label="Pinterest">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                                 <circle cx="12" cy="12" r="11"/>
-                                <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" fill="white"/>
+                                <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 .995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" fill="white"/>
                             </svg>
                         </a>
                     </div>
@@ -438,26 +558,28 @@
         </div>
     </footer>
 
-    <!-- Cart Sidebar -->
-    <div id="cartSidebar" class="cart-sidebar" role="dialog" aria-labelledby="cartTitle" aria-hidden="true">
-        <div class="cart-header">
-            <h3 id="cartTitle">Your Cart</h3>
-            <button id="cartClose" class="cart-close" aria-label="Close cart">&times;</button>
-        </div>
-        <div id="cartBody" class="cart-body">
-            <div id="cartEmpty" class="cart-empty">
-                <p>Your cart is empty</p>
+    <aside>
+        <!-- Cart Sidebar -->
+        <div id="cartSidebar" class="cart-sidebar" role="dialog" aria-labelledby="cartTitle" aria-hidden="true">
+            <div class="cart-header">
+                <h3 id="cartTitle">Your Cart</h3>
+                <button id="cartClose" class="cart-close" aria-label="Close cart">&times;</button>
             </div>
-            <div id="cartItems" class="cart-items"></div>
-        </div>
-        <div id="cartFooter" class="cart-footer">
-            <div class="cart-total">
-                Total: <span id="cartTotal">$0.00</span>
+            <div id="cartBody" class="cart-body">
+                <div id="cartEmpty" class="cart-empty">
+                    <p>Your cart is empty</p>
+                </div>
+                <div id="cartItems" class="cart-items"></div>
             </div>
-            <button id="checkoutButton" class="btn btn-primary">Proceed to Checkout</button>
+            <div id="cartFooter" class="cart-footer">
+                <div class="cart-total">
+                    Total: <span id="cartTotal">$0.00</span>
+                </div>
+                <button id="checkoutButton" class="btn btn-primary">Proceed to Checkout</button>
+            </div>
         </div>
-    </div>
-    <div id="cartOverlay" class="cart-overlay"></div>
+        <div id="cartOverlay" class="cart-overlay"></div>
+    </aside>
 
     <!-- Success Modal -->
     <div class="modal" id="successModal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
@@ -466,9 +588,24 @@
             <div class="modal-icon">✓</div>
             <h3 id="modalTitle">Added to Cart!</h3>
             <p>Your Luxe Nipple Pasties have been added to your cart.</p>
-            <button class="btn btn-primary" onclick="closeModal()">Continue Shopping</button>
+            <button class="btn btn-primary" data-action="closeModal">Continue Shopping</button>
         </div>
     </div>
+
+    <!-- Exit Intent Popup - NEW -->
+    <div class="exit-intent-modal" id="exitIntentModal" role="dialog" aria-labelledby="exitIntentTitle" aria-hidden="true">
+        <div class="exit-intent-content">
+            <button class="modal-close" aria-label="Close" onclick="closeExitIntent()">&times;</button>
+            <h3 id="exitIntentTitle">Wait! Don't Leave Empty-Handed</h3>
+            <p class="exit-intent-subtitle">Get <strong>10% OFF</strong> your first order</p>
+            <form id="exitIntentForm" class="exit-intent-form">
+                <input type="email" placeholder="Enter your email" required aria-label="Email address">
+                <button type="submit" class="btn btn-primary">Get My Discount</button>
+            </form>
+            <p class="exit-intent-footer">Plus, get exclusive tips and early access to new products</p>
+        </div>
+    </div>
+    <div id="exitIntentOverlay" class="exit-intent-overlay"></div>
 
     <!-- JavaScript -->
     <script src="script.js"></script>

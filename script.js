@@ -1,14 +1,9 @@
-// script.js
-/*
-Purpose: Client-side interactions for Luxe Nipple Pasties landing page
-Features: Add to cart simulation, modal handling, smooth scrolling, cart counter
-No external dependencies - vanilla JavaScript only
-*/
-
+// Enhanced script.js with all improvements
 // Cart state
 let cartCount = 0;
 let cartItems = [];
 let isSubmitting = false;
+let exitIntentShown = false;
 
 // DOM Elements
 let purchaseForm, modal, cartCountElement, quantitySelect, submitButton;
@@ -23,9 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeFAQ();
         initializeImageGallery();
         initializeQuantityControls();
-        initializeCountdownTimer();
+        initializeDeliveryUrgency();
         initializeViewerCount();
         initializeRecentPurchases();
+        initializeDynamicStock();
+        initializeExitIntent();
         updateCartDisplay();
     } catch (error) {
         console.error('Initialization error:', error);
@@ -33,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Initialize DOM Elements with error handling
+// Initialize DOM Elements
 function initializeDOMElements() {
     try {
         purchaseForm = document.getElementById('purchaseForm');
@@ -42,7 +39,6 @@ function initializeDOMElements() {
         quantitySelect = document.getElementById('quantity');
         submitButton = document.querySelector('.btn-add-cart');
         
-        // Cart elements
         cartButton = document.getElementById('cartButton');
         cartSidebar = document.getElementById('cartSidebar');
         cartOverlay = document.getElementById('cartOverlay');
@@ -52,7 +48,6 @@ function initializeDOMElements() {
         cartFooter = document.getElementById('cartFooter');
         cartTotal = document.getElementById('cartTotal');
         
-        // Checkout elements
         checkoutButton = document.getElementById('checkoutButton');
         buyNowButton = document.getElementById('buyNowButton');
     } catch (error) {
@@ -64,33 +59,27 @@ function initializeDOMElements() {
 // Event Listeners
 function initializeEventListeners() {
     try {
-        // Purchase form submission
         if (purchaseForm) {
             purchaseForm.addEventListener('submit', handleAddToCart);
         }
         
-        // Cart button click
         if (cartButton) {
             cartButton.addEventListener('click', toggleCart);
         }
         
-        // Cart close button
         if (cartClose) {
             cartClose.addEventListener('click', closeCart);
         }
         
-        // Cart overlay click
         if (cartOverlay) {
             cartOverlay.addEventListener('click', closeCart);
         }
         
-        // Modal close button
         const modalClose = document.querySelector('.modal-close');
         if (modalClose) {
             modalClose.addEventListener('click', closeModal);
         }
         
-        // Close modal on outside click
         if (modal) {
             modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
@@ -99,7 +88,6 @@ function initializeEventListeners() {
             });
         }
         
-        // Keyboard accessibility for modal and cart
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 if (modal && modal.classList.contains('active')) {
@@ -108,20 +96,289 @@ function initializeEventListeners() {
                 if (cartSidebar && cartSidebar.classList.contains('active')) {
                     closeCart();
                 }
+                const exitModal = document.getElementById('exitIntentModal');
+                if (exitModal && exitModal.classList.contains('active')) {
+                    closeExitIntent();
+                }
             }
         });
         
-        // Checkout button
         if (checkoutButton) {
             checkoutButton.addEventListener('click', handleCheckout);
         }
         
-        // Buy Now button
         if (buyNowButton) {
             buyNowButton.addEventListener('click', handleBuyNow);
         }
+
+        const heroCTA = document.querySelector('.hero-cta');
+        if (heroCTA) {
+            heroCTA.addEventListener('click', (e) => {
+                const action = e.target.dataset.action;
+                if (action === 'scrollToProduct') {
+                    scrollToProduct();
+                } else if (action === 'scrollToFeatures') {
+                    scrollToFeatures();
+                }
+            });
+        }
+
+        const finalCTA = document.querySelector('.final-cta .btn-primary');
+        if (finalCTA) {
+            finalCTA.addEventListener('click', (e) => {
+                const action = e.target.dataset.action;
+                if (action === 'scrollToProduct') {
+                    scrollToProduct();
+                }
+            });
+        }
+
+        const successModalButton = document.querySelector('#successModal .btn-primary');
+        if (successModalButton) {
+            successModalButton.addEventListener('click', (e) => {
+                const action = e.target.dataset.action;
+                if (action === 'closeModal') {
+                    closeModal();
+                }
+            });
+        }
+
+        // Exit Intent Form
+        const exitIntentForm = document.getElementById('exitIntentForm');
+        if (exitIntentForm) {
+            exitIntentForm.addEventListener('submit', handleExitIntentSubmit);
+        }
     } catch (error) {
         console.error('Error initializing event listeners:', error);
+    }
+}
+
+// NEW: Initialize Delivery Urgency Timer
+function initializeDeliveryUrgency() {
+    try {
+        const urgencyTime = document.getElementById('urgencyTime');
+        const deliveryDateEl = document.getElementById('deliveryDate');
+        
+        if (!urgencyTime || !deliveryDateEl) return;
+        
+        // Set initial time (3 hours 24 minutes)
+        let totalMinutes = 3 * 60 + 24;
+        
+        // Calculate delivery date (4 business days from now)
+        const deliveryDate = new Date();
+        let daysAdded = 0;
+        while (daysAdded < 4) {
+            deliveryDate.setDate(deliveryDate.getDate() + 1);
+            const dayOfWeek = deliveryDate.getDay();
+            if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+                daysAdded++;
+            }
+        }
+        
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        deliveryDateEl.textContent = `${monthNames[deliveryDate.getMonth()]} ${deliveryDate.getDate()}`;
+        
+        // Update countdown every minute
+        setInterval(function() {
+            totalMinutes--;
+            if (totalMinutes < 0) {
+                totalMinutes = 3 * 60 + 24; // Reset
+            }
+            
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            urgencyTime.textContent = `${hours}h ${minutes}m`;
+        }, 60000);
+    } catch (error) {
+        console.error('Error initializing delivery urgency:', error);
+    }
+}
+
+// NEW: Initialize Dynamic Stock Indicator
+function initializeDynamicStock() {
+    try {
+        const stockLevels = {1: 8, 2: 4, 3: 2, 4: 2, 5: 1};
+        
+        // Update stock when quantity changes
+        const qtyOptions = document.querySelectorAll('.qty-option');
+        if (qtyOptions.length > 0) {
+            qtyOptions.forEach(option => {
+                const originalClick = option.onclick;
+                option.addEventListener('click', function() {
+                    const qty = parseInt(this.getAttribute('data-qty'));
+                    updateStockMessage(qty, stockLevels);
+                });
+            });
+        }
+        
+        // Set initial stock message
+        const activeOption = document.querySelector('.qty-option.active');
+        if (activeOption) {
+            const initialQty = parseInt(activeOption.getAttribute('data-qty')) || 1;
+            updateStockMessage(initialQty, stockLevels);
+        }
+    } catch (error) {
+        console.error('Error initializing dynamic stock:', error);
+    }
+}
+
+// NEW: Update Stock Message
+function updateStockMessage(selectedQty, stockLevels) {
+    try {
+        const stockMessage = document.getElementById('stockMessage');
+        if (!stockMessage) return;
+        
+        const remaining = stockLevels[selectedQty] || 8;
+        const unit = selectedQty > 1 ? 'sets' : 'pair';
+        stockMessage.textContent = `Only ${remaining} ${unit} left at this quantity — order soon`;
+    } catch (error) {
+        console.error('Error updating stock message:', error);
+    }
+}
+
+// NEW: Initialize Recent Purchases Notification
+function initializeRecentPurchases() {
+    try {
+        const recentPurchase = document.getElementById('recentPurchase');
+        if (!recentPurchase) return;
+        
+        const names = ['Sarah M.', 'Jessica K.', 'Amanda R.', 'Emily T.', 'Olivia W.', 'Sophia L.'];
+        const locations = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Miami', 'Seattle'];
+        const timeAgo = ['2 minutes ago', '5 minutes ago', '8 minutes ago', '12 minutes ago'];
+        
+        function showPurchaseNotification() {
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+            const randomTime = timeAgo[Math.floor(Math.random() * timeAgo.length)];
+            
+            const purchaseText = recentPurchase.querySelector('.purchase-text');
+            if (purchaseText) {
+                purchaseText.textContent = `${randomName} from ${randomLocation} purchased ${randomTime}`;
+            }
+            
+            recentPurchase.style.display = 'flex';
+            recentPurchase.classList.add('show');
+            
+            setTimeout(() => {
+                recentPurchase.classList.remove('show');
+                setTimeout(() => {
+                    recentPurchase.style.display = 'none';
+                }, 300);
+            }, 5000);
+        }
+        
+        // Show first notification after 8 seconds
+        setTimeout(showPurchaseNotification, 8000);
+        
+        // Then show every 25-35 seconds
+        setInterval(showPurchaseNotification, 30000);
+    } catch (error) {
+        console.error('Error initializing recent purchases:', error);
+    }
+}
+
+// NEW: Initialize Exit Intent Popup
+function initializeExitIntent() {
+    try {
+        document.addEventListener('mouseleave', function(e) {
+            if (e.clientY < 10 && !exitIntentShown && cartItems.length === 0) {
+                exitIntentShown = true;
+                showExitIntent();
+            }
+        });
+        
+        const exitOverlay = document.getElementById('exitIntentOverlay');
+        if (exitOverlay) {
+            exitOverlay.addEventListener('click', closeExitIntent);
+        }
+    } catch (error) {
+        console.error('Error initializing exit intent:', error);
+    }
+}
+
+// NEW: Show Exit Intent Popup
+function showExitIntent() {
+    try {
+        const exitModal = document.getElementById('exitIntentModal');
+        const exitOverlay = document.getElementById('exitIntentOverlay');
+        
+        if (exitModal && exitOverlay) {
+            exitModal.classList.add('active');
+            exitOverlay.classList.add('active');
+            exitModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+    } catch (error) {
+        console.error('Error showing exit intent:', error);
+    }
+}
+
+// NEW: Close Exit Intent Popup
+function closeExitIntent() {
+    try {
+        const exitModal = document.getElementById('exitIntentModal');
+        const exitOverlay = document.getElementById('exitIntentOverlay');
+        
+        if (exitModal && exitOverlay) {
+            exitModal.classList.remove('active');
+            exitOverlay.classList.remove('active');
+            exitModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+    } catch (error) {
+        console.error('Error closing exit intent:', error);
+    }
+}
+
+// NEW: Handle Exit Intent Form Submit
+function handleExitIntentSubmit(e) {
+    e.preventDefault();
+    
+    try {
+        const emailInput = e.target.querySelector('input[type="email"]');
+        if (!emailInput) return;
+        
+        const email = emailInput.value;
+        console.log('Email captured:', email);
+        
+        // Show success message
+        const exitModal = document.getElementById('exitIntentModal');
+        const exitContent = exitModal.querySelector('.exit-intent-content');
+        
+        if (exitContent) {
+            exitContent.innerHTML = `
+                <button class="modal-close" aria-label="Close" onclick="closeExitIntent()">&times;</button>
+                <div class="modal-icon">✓</div>
+                <h3>Success!</h3>
+                <p>Check your email for your <strong>10% discount code</strong></p>
+                <button class="btn btn-primary" onclick="closeExitIntent()">Start Shopping</button>
+            `;
+        }
+        
+        // Close after 3 seconds
+        setTimeout(closeExitIntent, 3000);
+    } catch (error) {
+        console.error('Error handling exit intent submit:', error);
+    }
+}
+
+// Make closeExitIntent globally accessible
+window.closeExitIntent = closeExitIntent;
+
+// Initialize Viewer Count
+function initializeViewerCount() {
+    try {
+        const viewerCountElement = document.getElementById('viewerCount');
+        if (!viewerCountElement) return;
+        
+        setInterval(function() {
+            const current = parseInt(viewerCountElement.textContent);
+            const change = Math.floor(Math.random() * 3) - 1;
+            const newCount = Math.max(15, Math.min(35, current + change));
+            viewerCountElement.textContent = newCount;
+        }, 8000);
+    } catch (error) {
+        console.error('Error initializing viewer count:', error);
     }
 }
 
@@ -134,7 +391,6 @@ function validateForm() {
         
         const quantity = parseInt(quantitySelect.value);
         
-        // Validate quantity
         if (isNaN(quantity) || quantity < 1 || quantity > 10) {
             showFormError('Please select a valid quantity (1-10)');
             return false;
@@ -151,25 +407,21 @@ function validateForm() {
 // Show form error message
 function showFormError(message) {
     try {
-        // Remove existing error message
         const existingError = document.querySelector('.form-error');
         if (existingError) {
             existingError.remove();
         }
         
-        // Create error message element
         const errorDiv = document.createElement('div');
         errorDiv.className = 'form-error';
         errorDiv.textContent = message;
         errorDiv.setAttribute('role', 'alert');
         errorDiv.setAttribute('aria-live', 'polite');
         
-        // Insert before submit button
         if (submitButton && submitButton.parentNode) {
             submitButton.parentNode.insertBefore(errorDiv, submitButton);
         }
         
-        // Auto-remove after 5 seconds
         setTimeout(() => {
             if (errorDiv.parentNode) {
                 errorDiv.remove();
@@ -199,63 +451,31 @@ function showError(message) {
     }
 }
 
-// Add to Cart Handler with validation and loading state
+// Add to Cart Handler
 function handleAddToCart(e) {
     e.preventDefault();
-    e.stopPropagation();
-    
-    // Prevent double submission
-    if (isSubmitting) {
-        return false;
+    if (isSubmitting) return;
+
+    if (!validateForm()) {
+        return;
     }
-    
-    try {
-        // Get current quantity from input
-        const qtyInput = document.getElementById('quantity');
-        if (!qtyInput) {
-            showFormError('Quantity selector not found');
-            return false;
+
+    setLoadingState(true);
+
+    // Simulate network request
+    setTimeout(() => {
+        try {
+            const quantity = parseInt(quantitySelect.value);
+            addToCart(quantity);
+            showModal();
+            trackAddToCart(quantity);
+        } catch (error) {
+            console.error('Error during cart operation:', error);
+            showFormError('Could not add item to cart. Please try again.');
+        } finally {
+            setLoadingState(false);
         }
-        
-        const quantity = parseInt(qtyInput.value) || 1;
-        
-        // Validate quantity
-        if (isNaN(quantity) || quantity < 1 || quantity > 10) {
-            showFormError('Please select a valid quantity (1-10)');
-            return false;
-        }
-        
-        // Set loading state
-        setLoadingState(true);
-        
-        // Simulate API call delay (remove in production)
-        setTimeout(() => {
-            try {
-                // Add item to cart
-                addToCart(quantity);
-                
-                // Open cart sidebar to show added item
-                openCart();
-                
-                // Track conversion (placeholder for analytics)
-                trackAddToCart(quantity);
-                
-                // Reset loading state
-                setLoadingState(false);
-            } catch (error) {
-                console.error('Error processing cart addition:', error);
-                showFormError('Failed to add item to cart. Please try again.');
-                setLoadingState(false);
-            }
-        }, 500);
-        
-    } catch (error) {
-        console.error('Error in handleAddToCart:', error);
-        showFormError('An error occurred. Please try again.');
-        setLoadingState(false);
-    }
-    
-    return false;
+    }, 500);
 }
 
 // Set loading state for submit button
@@ -273,7 +493,7 @@ function setLoadingState(loading) {
         } else {
             submitButton.disabled = false;
             submitButton.removeAttribute('aria-busy');
-            submitButton.textContent = 'Secure Your Pair';
+            submitButton.textContent = 'Get My Luxe Pasties Now';
             submitButton.classList.remove('loading');
         }
     } catch (error) {
@@ -292,7 +512,6 @@ function addToCart(quantity) {
             image: 'https://via.placeholder.com/80x80/F5F0EB/8B7355?text=Product'
         };
         
-        // Check if item already in cart
         const existingItem = cartItems.find(item => item.id === product.id);
         
         if (existingItem) {
@@ -309,17 +528,15 @@ function addToCart(quantity) {
     }
 }
 
-// Update Cart Display with error handling
+// Update Cart Display
 function updateCartDisplay() {
     try {
         if (cartCountElement) {
             cartCountElement.textContent = cartCount;
             cartCountElement.setAttribute('aria-label', `${cartCount} items in cart`);
             
-            // Show/hide cart count badge
             if (cartCount > 0) {
                 cartCountElement.style.display = 'flex';
-                // Animation on update
                 cartCountElement.style.transform = 'scale(1.3)';
                 setTimeout(() => {
                     if (cartCountElement) {
@@ -349,26 +566,31 @@ function updateCartItems() {
             if (cartItemsContainer) cartItemsContainer.style.display = 'block';
             if (cartFooter) cartFooter.style.display = 'block';
             
-            // Render cart items
             if (cartItemsContainer) {
                 cartItemsContainer.innerHTML = cartItems.map((item, index) => `
-                    <div class="cart-item" data-item-id="${item.id}">
+                    <div class="cart-item" data-item-id="${item.id}" data-index="${index}">
                         <img src="${item.image}" alt="${item.name}" class="cart-item-image">
                         <div class="cart-item-details">
                             <div class="cart-item-name">${item.name}</div>
                             <div class="cart-item-price">$${item.price.toFixed(2)} each</div>
                             <div class="cart-item-quantity">
-                                <button class="cart-item-qty-btn" onclick="updateCartItemQuantity(${index}, -1)">−</button>
+                                <button class="cart-item-qty-btn minus" aria-label="Decrease quantity">-</button>
                                 <input type="number" class="cart-item-qty-input" value="${item.quantity}" min="1" max="10" readonly>
-                                <button class="cart-item-qty-btn" onclick="updateCartItemQuantity(${index}, 1)">+</button>
+                                <button class="cart-item-qty-btn plus" aria-label="Increase quantity">+</button>
                             </div>
                         </div>
-                        <button class="cart-item-remove" onclick="removeCartItem(${index})" aria-label="Remove item">×</button>
+                        <button class="cart-item-remove" aria-label="Remove item">×</button>
                     </div>
                 `).join('');
+
+                cartItemsContainer.querySelectorAll('.cart-item').forEach(item => {
+                    const index = parseInt(item.dataset.index);
+                    item.querySelector('.minus').addEventListener('click', () => updateCartItemQuantity(index, -1));
+                    item.querySelector('.plus').addEventListener('click', () => updateCartItemQuantity(index, 1));
+                    item.querySelector('.cart-item-remove').addEventListener('click', () => removeCartItem(index));
+                });
             }
             
-            // Update total
             const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             if (cartTotal) {
                 cartTotal.textContent = `$${total.toFixed(2)}`;
@@ -462,10 +684,9 @@ function removeCartItem(index) {
     }
 }
 
-// Handle Buy Now - Triggers Content Locker
+// Handle Buy Now
 function handleBuyNow() {
     try {
-        // Get current quantity
         const qtyInput = document.getElementById('quantity');
         if (!qtyInput) {
             showFormError('Quantity selector not found');
@@ -474,16 +695,13 @@ function handleBuyNow() {
         
         const quantity = parseInt(qtyInput.value) || 1;
         
-        // Validate quantity
-        if (isNaN(quantity) || quantity < 1 || quantity > 10) {
+        if (isNaN(quantity) || quantity < 1 || quantity < 10) {
             showFormError('Please select a valid quantity (1-10)');
             return;
         }
         
-        // Add to cart first
         addToCart(quantity);
         
-        // Immediately proceed to checkout (which triggers locker)
         setTimeout(() => {
             handleCheckout();
         }, 300);
@@ -493,7 +711,7 @@ function handleBuyNow() {
     }
 }
 
-// Handle Checkout - Triggers Content Locker
+// Handle Checkout
 function handleCheckout() {
     try {
         if (cartItems.length === 0) {
@@ -503,32 +721,22 @@ function handleCheckout() {
         
         const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         
-        // Close cart first
         closeCart();
         
-        // Trigger content locker
-        // Wait a moment for cart to close, then trigger locker
         setTimeout(() => {
             try {
-                // Check if locker functions are available
                 if (typeof xfLock === 'function') {
                     xfLock();
                 } else if (typeof CPABuildLock === 'function') {
                     CPABuildLock();
-                } else if (typeof wHbRF_FgI_vvOjec !== 'undefined') {
-                    // Locker script should auto-initialize
-                    // Force trigger if needed
-                    console.log('Content locker initialized');
                 } else {
-                    // Fallback: try to trigger locker after script loads
-                    console.log('Waiting for content locker to load...');
+                    console.log('Content locker initialized');
                     setTimeout(() => {
                         if (typeof xfLock === 'function') {
                             xfLock();
                         } else if (typeof CPABuildLock === 'function') {
                             CPABuildLock();
                         } else {
-                            // Final fallback - show error modal
                             showModal();
                             const modalTitle = document.getElementById('modalTitle');
                             const modalContent = document.querySelector('.modal-content p');
@@ -539,7 +747,6 @@ function handleCheckout() {
                 }
             } catch (error) {
                 console.error('Error triggering content locker:', error);
-                // Fallback message
                 showModal();
                 const modalTitle = document.getElementById('modalTitle');
                 const modalContent = document.querySelector('.modal-content p');
@@ -554,27 +761,25 @@ function handleCheckout() {
     }
 }
 
-// Make functions globally accessible for onclick handlers
+// Make functions globally accessible
 window.toggleCart = toggleCart;
 window.openCart = openCart;
 window.closeCart = closeCart;
 window.updateCartItemQuantity = updateCartItemQuantity;
 window.removeCartItem = removeCartItem;
 
-// Modal Functions with error handling
+// Modal Functions
 function showModal() {
     try {
         if (modal) {
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
             
-            // Focus trap
             const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
             if (focusableElements.length > 0) {
                 focusableElements[0].focus();
             }
             
-            // Prevent body scroll
             document.body.style.overflow = 'hidden';
         }
     } catch (error) {
@@ -587,8 +792,6 @@ function closeModal() {
         if (modal) {
             modal.classList.remove('active');
             modal.setAttribute('aria-hidden', 'true');
-            
-            // Restore body scroll
             document.body.style.overflow = '';
         }
     } catch (error) {
@@ -596,7 +799,7 @@ function closeModal() {
     }
 }
 
-// Smooth Scroll Functions with error handling
+// Smooth Scroll Functions
 function scrollToProduct() {
     try {
         const productSection = document.getElementById('product');
@@ -642,7 +845,6 @@ function initializeFAQ() {
                 return;
             }
             
-            // Set initial state
             answer.style.display = 'none';
             answer.setAttribute('aria-hidden', 'true');
             question.setAttribute('aria-expanded', 'false');
@@ -652,12 +854,10 @@ function initializeFAQ() {
             answer.setAttribute('id', `faq-answer-${index}`);
             answer.setAttribute('aria-labelledby', `faq-question-${index}`);
             
-            // Add click handler
             question.addEventListener('click', function() {
                 toggleFAQ(item, question, answer);
             });
             
-            // Add keyboard handler
             question.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -675,7 +875,6 @@ function toggleFAQ(item, question, answer) {
     try {
         const isExpanded = question.getAttribute('aria-expanded') === 'true';
         
-        // Close all other FAQ items (optional - remove if you want multiple open)
         const allFaqItems = document.querySelectorAll('.faq-item');
         allFaqItems.forEach(otherItem => {
             if (otherItem !== item) {
@@ -690,7 +889,6 @@ function toggleFAQ(item, question, answer) {
             }
         });
         
-        // Toggle current item
         if (isExpanded) {
             answer.style.display = 'none';
             answer.setAttribute('aria-hidden', 'true');
@@ -707,79 +905,39 @@ function toggleFAQ(item, question, answer) {
     }
 }
 
-// Analytics Tracking (Placeholder)
+// Make functions globally accessible for onclick attributes
+window.closeModal = closeModal;
+window.scrollToProduct = scrollToProduct;
+window.scrollToFeatures = scrollToFeatures;
+
+// Analytics Tracking
 function trackAddToCart(quantity) {
-    // Placeholder for Google Analytics or other tracking
     console.log('Add to Cart Event:', {
         product: 'Luxe Reusable Silicone Nipple Pasties',
         quantity: quantity,
         price: 29.99,
         currency: 'USD'
     });
-    
-    /*
-    Example Google Analytics 4 implementation:
-    
-    gtag('event', 'add_to_cart', {
-        currency: 'USD',
-        value: 29.99 * quantity,
-        items: [{
-            item_id: 'NP-LUXE-001',
-            item_name: 'Luxe Reusable Silicone Nipple Pasties',
-            price: 29.99,
-            quantity: quantity
-        }]
-    });
-    */
 }
 
-// Image Gallery Enhancement with error handling
+// Image Gallery Enhancement
 function initializeImageGallery() {
     try {
         const thumbnails = document.querySelectorAll('.product-thumbnails .thumbnail');
         const mainImage = document.getElementById('mainProductImage');
         
         if (thumbnails.length > 0 && mainImage) {
-            thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', function() {
-                    try {
-                        const fullImage = this.getAttribute('data-full') || this.src;
-                        if (!fullImage) {
-                            throw new Error('Invalid image source');
-                        }
-                        
-                        // Update main image
-                        mainImage.src = fullImage;
-                        mainImage.alt = this.alt;
-                        
-                        // Update active state
-                        thumbnails.forEach(t => t.classList.remove('active'));
-                        this.classList.add('active');
-                    } catch (error) {
-                        console.error('Error updating main image:', error);
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    changeImage(this, thumbnails, mainImage);
+                });
+
+                thumbnail.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        changeImage(this, thumbnails, mainImage);
                     }
                 });
-                
-                // Add error handling for image load failures
-                thumb.addEventListener('error', function() {
-                    console.error('Failed to load thumbnail image:', this.src);
-                    this.src = 'https://via.placeholder.com/400x400/F5F0EB/8B7355?text=Image+Error';
-                });
-            });
-            
-            // Add zoom functionality
-            const imageWrapper = document.querySelector('.product-image-wrapper');
-            if (imageWrapper) {
-                imageWrapper.addEventListener('click', function() {
-                    const fullImage = mainImage.src.replace('w=800&h=800', 'w=1200&h=1200');
-                    window.open(fullImage, '_blank');
-                });
-            }
-            
-            // Add error handling for main image
-            mainImage.addEventListener('error', function() {
-                console.error('Failed to load main image:', this.src);
-                this.src = 'https://via.placeholder.com/800x800/F5F0EB/8B7355?text=Product+Image';
             });
         }
     } catch (error) {
@@ -787,54 +945,53 @@ function initializeImageGallery() {
     }
 }
 
-// Initialize Quantity Controls
+function changeImage(selectedThumbnail, allThumbnails, mainImage) {
+    // Remove active class from all thumbnails
+    allThumbnails.forEach(t => t.classList.remove('active'));
+    
+    // Add active class to the clicked thumbnail
+    selectedThumbnail.classList.add('active');
+    
+    // Change the main image src
+    mainImage.src = selectedThumbnail.dataset.full;
+}
+
 function initializeQuantityControls() {
     try {
-        const qtyPlus = document.querySelector('.qty-plus');
-        const qtyMinus = document.querySelector('.qty-minus');
         const qtyInput = document.getElementById('quantity');
         const qtyOptions = document.querySelectorAll('.qty-option');
-        
-        // Initialize quantity from active option
-        const activeOption = document.querySelector('.qty-option.active');
-        if (activeOption && qtyInput) {
-            const defaultQty = parseInt(activeOption.getAttribute('data-qty')) || 1;
-            qtyInput.value = defaultQty;
-        }
-        
-        if (qtyPlus && qtyMinus && qtyInput) {
-            qtyPlus.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const current = parseInt(qtyInput.value) || 1;
-                if (current < 10) {
-                    const newQty = current + 1;
-                    qtyInput.value = newQty;
-                    updateQuantityOptions(newQty);
-                }
+        const minusBtn = document.querySelector('.qty-btn.minus');
+        const plusBtn = document.querySelector('.qty-btn.plus');
+
+        if (!qtyInput) return;
+
+        qtyOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const qty = this.dataset.qty;
+                qtyInput.value = qty;
+
+                qtyOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
             });
-            
-            qtyMinus.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const current = parseInt(qtyInput.value) || 1;
-                if (current > 1) {
-                    const newQty = current - 1;
-                    qtyInput.value = newQty;
-                    updateQuantityOptions(newQty);
+        });
+
+        if (minusBtn) {
+            minusBtn.addEventListener('click', () => {
+                let currentQty = parseInt(qtyInput.value);
+                if (currentQty > 1) {
+                    qtyInput.value = currentQty - 1;
+                    updateActiveQtyOption(currentQty - 1);
                 }
             });
         }
-        
-        if (qtyOptions.length > 0 && qtyInput) {
-            qtyOptions.forEach(option => {
-                option.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const qty = parseInt(this.getAttribute('data-qty')) || 1;
-                    qtyInput.value = qty;
-                    updateQuantityOptions(qty);
-                });
+
+        if (plusBtn) {
+            plusBtn.addEventListener('click', () => {
+                let currentQty = parseInt(qtyInput.value);
+                if (currentQty < 10) {
+                    qtyInput.value = currentQty + 1;
+                    updateActiveQtyOption(currentQty + 1);
+                }
             });
         }
     } catch (error) {
@@ -842,131 +999,13 @@ function initializeQuantityControls() {
     }
 }
 
-// Update Quantity Options Active State
-function updateQuantityOptions(quantity) {
-    try {
-        const qtyOptions = document.querySelectorAll('.qty-option');
-        const qtyInput = document.getElementById('quantity');
-        
-        // Update input value
-        if (qtyInput) {
-            qtyInput.value = quantity;
+function updateActiveQtyOption(qty) {
+    const qtyOptions = document.querySelectorAll('.qty-option');
+    qtyOptions.forEach(option => {
+        if (parseInt(option.dataset.qty) === qty) {
+            option.classList.add('active');
+        } else {
+            option.classList.remove('active');
         }
-        
-        // Update active state
-        qtyOptions.forEach(option => {
-            const qty = parseInt(option.getAttribute('data-qty')) || 1;
-            if (qty === quantity) {
-                option.classList.add('active');
-            } else {
-                option.classList.remove('active');
-            }
-        });
-    } catch (error) {
-        console.error('Error updating quantity options:', error);
-    }
-}
-
-// Initialize Countdown Timer
-function initializeCountdownTimer() {
-    try {
-        const countdownElement = document.getElementById('countdown');
-        if (!countdownElement) return;
-        
-        // Set countdown to 24 hours from now
-        let hours = 23;
-        let minutes = 45;
-        let seconds = 12;
-        
-        setInterval(function() {
-            seconds--;
-            if (seconds < 0) {
-                seconds = 59;
-                minutes--;
-                if (minutes < 0) {
-                    minutes = 59;
-                    hours--;
-                    if (hours < 0) {
-                        hours = 23;
-                    }
-                }
-            }
-            
-            const h = hours.toString().padStart(2, '0');
-            const m = minutes.toString().padStart(2, '0');
-            const s = seconds.toString().padStart(2, '0');
-            countdownElement.textContent = `${h}:${m}:${s}`;
-        }, 1000);
-    } catch (error) {
-        console.error('Error initializing countdown timer:', error);
-    }
-}
-
-// Initialize Viewer Count
-function initializeViewerCount() {
-    try {
-        const viewerCountElement = document.getElementById('viewerCount');
-        if (!viewerCountElement) return;
-        
-        // Simulate viewer count changes
-        setInterval(function() {
-            const current = parseInt(viewerCountElement.textContent);
-            const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
-            const newCount = Math.max(15, Math.min(35, current + change));
-            viewerCountElement.textContent = newCount;
-        }, 5000);
-    } catch (error) {
-        console.error('Error initializing viewer count:', error);
-    }
-}
-
-// Initialize Recent Purchases
-function initializeRecentPurchases() {
-    try {
-        const purchaseList = document.querySelector('.purchase-list');
-        if (!purchaseList) return;
-        
-        const names = ['Sarah M.', 'Jessica K.', 'Amanda R.', 'Emily T.', 'Olivia W.', 'Sophia L.', 'Isabella M.', 'Mia K.'];
-        const locations = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego'];
-        
-        setInterval(function() {
-            const randomName = names[Math.floor(Math.random() * names.length)];
-            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
-            
-            const purchaseItem = document.createElement('div');
-            purchaseItem.className = 'purchase-item';
-            purchaseItem.innerHTML = `
-                <span class="purchase-name">${randomName}</span>
-                <span class="purchase-location">from ${randomLocation}</span>
-                <span class="purchase-time">just now</span>
-            `;
-            
-            purchaseList.insertBefore(purchaseItem, purchaseList.firstChild);
-            
-            // Remove old items (keep only 2)
-            while (purchaseList.children.length > 2) {
-                purchaseList.removeChild(purchaseList.lastChild);
-            }
-        }, 10000); // Add new purchase every 10 seconds
-    } catch (error) {
-        console.error('Error initializing recent purchases:', error);
-    }
-}
-
-// Lazy Loading Fallback (for older browsers)
-if ('loading' in HTMLImageElement.prototype) {
-    // Native lazy loading supported
-    console.log('Native lazy loading supported');
-} else {
-    // Fallback for older browsers
-    const images = document.querySelectorAll('img[loading="lazy"]');
-    images.forEach(img => {
-        img.src = img.dataset.src || img.src;
     });
 }
-
-// Performance optimization: Defer non-critical operations
-window.addEventListener('load', function() {
-    // Any post-load optimizations can go here
-    console.log('Page fully loaded');
-});
