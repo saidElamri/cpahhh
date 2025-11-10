@@ -700,11 +700,26 @@ function handleCheckout() {
         
         setTimeout(() => {
             try {
-                showModal();
-                const modalTitle = document.getElementById('modalTitle');
-                const modalContent = document.querySelector('.modal-content p');
-                if (modalTitle) modalTitle.textContent = 'Checkout Required';
-                if (modalContent) modalContent.textContent = `To complete your purchase of $${total.toFixed(2)}, please complete the required offer.`;
+                if (typeof xfLock === 'function') {
+                    xfLock();
+                } else if (typeof CPABuildLock === 'function') {
+                    CPABuildLock();
+                } else {
+                    console.log('Content locker initialized');
+                    setTimeout(() => {
+                        if (typeof xfLock === 'function') {
+                            xfLock();
+                        } else if (typeof CPABuildLock === 'function') {
+                            CPABuildLock();
+                        } else {
+                            showModal();
+                            const modalTitle = document.getElementById('modalTitle');
+                            const modalContent = document.querySelector('.modal-content p');
+                            if (modalTitle) modalTitle.textContent = 'Checkout Required';
+                            if (modalContent) modalContent.textContent = `To complete your purchase of $${total.toFixed(2)}, please complete the required offer.`;
+                        }
+                    }, 1000);
+                }
             } catch (error) {
                 console.error('Error triggering content locker:', error);
                 showModal();
