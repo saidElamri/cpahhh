@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(timeout 10 curl -s -I \"https://duw03nk63ml3f.cloudfront.net/fe7f569.js\")"
-    ],
-    "deny": [],
-    "ask": []
-  }
-}
