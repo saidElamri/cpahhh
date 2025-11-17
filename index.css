@@ -875,6 +875,8 @@ button {
 
 .qty-option {
     padding: var(--space-5);
+    padding-top: calc(var(--space-5) + 15px); /* Add more space at the top */
+    padding-right: calc(var(--space-5) + 15px); /* Add more space at the right */
     background: white;
     border: 2px solid #E5E7EB;
     border-radius: var(--radius-md);
@@ -884,7 +886,7 @@ button {
     flex-direction: column;
     align-items: center;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .qty-option::before {
@@ -917,8 +919,8 @@ button {
 
 .badge {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: 0;
+    right: 0;
     background: linear-gradient(135deg, #10B981 0%, #059669 100%);
     color: white;
     padding: var(--space-1) var(--space-3);
