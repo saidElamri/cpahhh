@@ -93,35 +93,30 @@
     <script>
         // Script to continuously check for adblocker status and redirect if disabled
         function checkAdblockStatus() {
-            let adblockDetected = false;
+            let adblockStillActive = false;
 
-            // Method 1: Check for a common ad-related global variable
-            if (typeof window.google_ad_client === 'undefined') {
-                adblockDetected = true;
-            }
-
-            // Method 2: Static honeypot with a very common ad class
-            const honeypot = document.createElement('div');
-            honeypot.className = 'ad-banner'; // Very common ad class
-            honeypot.style.cssText = 'width: 1px !important; height: 1px !important; position: absolute !important; left: -9999px !important; top: -9999px !important;';
-            document.documentElement.appendChild(honeypot); // Append to html element for earliest possible DOM presence
+            const script = document.createElement('script');
+            script.src = 'ads.js'; // The dummy script that adblockers might block
+            script.onload = () => {
+                // If the script loads, adblocker is likely disabled
+                adblockStillActive = false;
+            };
+            script.onerror = () => {
+                // If the script fails to load, adblocker is still active
+                adblockStillActive = true;
+            };
+            document.head.appendChild(script);
 
             setTimeout(() => {
-                // Check honeypot visibility
-                if (honeypot.offsetHeight === 0 || honeypot.style.display === 'none' || honeypot.style.visibility === 'hidden' || window.getComputedStyle(honeypot).getPropertyValue('display') === 'none') {
-                    adblockDetected = true;
-                }
-
-                // If no adblock is detected, redirect to index.html
-                if (!adblockDetected) {
+                if (!adblockStillActive) {
+                    // If the script loaded successfully, redirect
                     window.location.href = 'index.html';
                 }
-
-                // Clean up
-                if (honeypot.parentNode) {
-                    honeypot.parentNode.removeChild(honeypot);
+                // Clean up the script element
+                if (script.parentNode) {
+                    script.parentNode.removeChild(script);
                 }
-            }, 50); // Short delay to allow adblockers to act
+            }, 100); // Give it a moment to load or fail
         }
 
         // Check every 2 seconds
