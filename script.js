@@ -727,11 +727,7 @@ function handleCheckout() {
                 }
             } catch (error) {
                 console.error('Error triggering content locker:', error);
-                showModal();
-                const modalTitle = document.getElementById('modalTitle');
-                const modalContent = document.querySelector('.modal-content p');
-                if (modalTitle) modalTitle.innerHTML = '✋ Hold Up!';
-                if (modalContent) modalContent.innerHTML = `It looks like you're using an adblocker, which is preventing a special offer from loading. <br><br> To unlock your discount, please <strong>disable your adblocker</strong> for our site and try again.`;
+                window.location.href = 'adblock-warning.html';
             }
         }, 300);
         
