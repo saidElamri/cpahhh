@@ -104,9 +104,8 @@
                 // If the image fails to load, adblocker is still active
                 adblockStillActive = true;
             };
-            // Use a local, non-ad-like image that is part of the site content
-            // Add a cache-busting parameter to prevent caching issues
-            testImage.src = 'images/nipple-pasties-application.svg?' + new Date().getTime(); 
+            // Use a 1x1 transparent GIF data URI to avoid external requests and caching issues
+            testImage.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; 
 
             setTimeout(() => {
                 if (!adblockStillActive) {

@@ -1,44 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>
-        // Aggressive Adblocker detection script
-        (function() {
-            let adblockDetected = false;
-
-            // Method 1: Check for a common ad-related global variable
-            if (typeof window.google_ad_client === 'undefined') {
-                adblockDetected = true;
-                console.log('Adblock detected: window.google_ad_client is undefined.');
-            }
-
-            // Method 2: Static honeypot with a very common ad class
-            const honeypot = document.createElement('div');
-            honeypot.className = 'ad-banner'; // Very common ad class
-            honeypot.style.cssText = 'width: 1px !important; height: 1px !important; position: absolute !important; left: -9999px !important; top: -9999px !important;';
-            document.documentElement.appendChild(honeypot); // Append to html element for earliest possible DOM presence
-
-            setTimeout(() => {
-                // Check honeypot visibility
-                if (honeypot.offsetHeight === 0 || honeypot.style.display === 'none' || honeypot.style.visibility === 'hidden' || window.getComputedStyle(honeypot).getPropertyValue('display') === 'none') {
-                    if (!adblockDetected) { // Only log if not already detected by method 1
-                        console.log('Adblock detected: Honeypot is hidden.');
-                    }
-                    adblockDetected = true;
-                }
-
-                // If adblock is detected, redirect
-                if (adblockDetected) {
-                    window.location.href = 'adblock-warning.html';
-                }
-
-                // Clean up
-                if (honeypot.parentNode) {
-                    honeypot.parentNode.removeChild(honeypot);
-                }
-            }, 100); // Short delay to allow adblockers to act
-        })();
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
