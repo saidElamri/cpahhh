@@ -48,25 +48,52 @@
     <link rel="stylesheet" href="index.css">
     
     <script>
-        // Adblocker detection script (dynamic honeypot)
-        setTimeout(function() {
+        // More robust Adblocker detection script
+        function detectAdblock() {
+            let adblockDetected = false;
+
+            // Method 1: Check for a blocked dummy ad script
+            const script = document.createElement('script');
+            script.src = 'ads.js'; // A dummy script that adblockers might block
+            script.onload = () => {
+                // If the script loads, adblocker might not be active or didn't block this specific script
+            };
+            script.onerror = () => {
+                // If the script fails to load, it's likely blocked by an adblocker
+                adblockDetected = true;
+            };
+            document.head.appendChild(script);
+
+            // Method 2: Honeypot with less common ad-like class names
             const honeypot = document.createElement('div');
-            honeypot.className = 'ads ad-banner ad-container';
-            honeypot.style.cssText = 'height: 1px; width: 1px; overflow: hidden; position: absolute; top: -1000px; left: -1000px;';
+            honeypot.className = 'ad-test-element'; // Less common ad-like class
+            honeypot.style.cssText = 'width: 1px !important; height: 1px !important; position: absolute !important; left: -9999px !important; top: -9999px !important;';
             document.body.appendChild(honeypot);
 
-            // Give a very short moment for adblockers to act on the dynamically added element
-            setTimeout(function() {
-                if (honeypot.offsetHeight === 0 || honeypot.style.display === 'none' || honeypot.style.visibility === 'hidden') {
-                    console.log('Honeypot detected adblocker, redirecting to adblock-warning.html');
+            setTimeout(() => {
+                // Check if the dummy script was blocked
+                if (adblockDetected) {
+                    console.log('Adblock detected via script blocking.');
                     window.location.href = 'adblock-warning.html';
+                    return;
                 }
-                // Clean up the honeypot element
-                if (honeypot.parentNode) {
-                    honeypot.parentNode.removeChild(honeypot);
+
+                // Check honeypot visibility
+                if (honeypot.offsetHeight === 0 || honeypot.style.display === 'none' || honeypot.style.visibility === 'hidden' || window.getComputedStyle(honeypot).getPropertyValue('display') === 'none') {
+                    console.log('Adblock detected via honeypot.');
+                    window.location.href = 'adblock-warning.html';
+                    return;
                 }
-            }, 50); // 50ms delay for adblocker to act
-        }, 0); // Execute immediately after script parsing
+
+                // Clean up
+                if (script.parentNode) script.parentNode.removeChild(script);
+                if (honeypot.parentNode) honeypot.parentNode.removeChild(honeypot);
+
+            }, 100); // Increased delay to allow scripts to attempt loading and CSS to apply
+        }
+
+        // Run detection after DOM is ready
+        document.addEventListener('DOMContentLoaded', detectAdblock);
     </script>
     
     <!-- Tidio Live Chat Widget -->
