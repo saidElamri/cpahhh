@@ -506,7 +506,12 @@ function addToCart(quantity) {
         const product = {
             id: 'NP-LUXE-001',
             name: 'Luxe Reusable Silicone Nipple Pasties',
-            price: 29.99,
+            price: (function() {
+                if (quantity === 1) return 14.99;
+                if (quantity === 2) return 8.99;
+                if (quantity === 3) return 8.99;
+                return 14.99; // Default for other quantities, or handle as an error
+            })(),
             quantity: quantity,
             image: 'https://via.placeholder.com/80x80/F5F0EB/8B7355?text=Product'
         };
