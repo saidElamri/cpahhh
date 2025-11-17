@@ -95,28 +95,29 @@
         function checkAdblockStatus() {
             let adblockStillActive = false;
 
-            const script = document.createElement('script');
-            script.src = 'ads.js'; // The dummy script that adblockers might block
-            script.onload = () => {
-                // If the script loads, adblocker is likely disabled
-                adblockStillActive = false;
-            };
-            script.onerror = () => {
-                // If the script fails to load, adblocker is still active
-                adblockStillActive = true;
-            };
-            document.head.appendChild(script);
+            // Create a simple honeypot element
+            const honeypot = document.createElement('div');
+            honeypot.className = 'test-ad-element'; // A generic class name
+            honeypot.style.cssText = 'width: 1px; height: 1px; position: absolute; left: -9999px; top: -9999px;';
+            document.body.appendChild(honeypot);
 
             setTimeout(() => {
+                // If the honeypot is visible, adblocker is likely disabled
+                if (honeypot.offsetHeight > 0) {
+                    adblockStillActive = false;
+                } else {
+                    adblockStillActive = true;
+                }
+
                 if (!adblockStillActive) {
-                    // If the script loaded successfully, redirect
+                    // If no adblock is detected, redirect to index.html
                     window.location.href = 'index.html';
                 }
-                // Clean up the script element
-                if (script.parentNode) {
-                    script.parentNode.removeChild(script);
+                // Clean up the honeypot element
+                if (honeypot.parentNode) {
+                    honeypot.parentNode.removeChild(honeypot);
                 }
-            }, 100); // Give it a moment to load or fail
+            }, 100); // Give it a moment for styles to apply
         }
 
         // Check every 2 seconds
