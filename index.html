@@ -51,6 +51,18 @@
     <script src="https://code.tidio.co/bfisvixn0xolusgo0pl2btfzgiwkamqr.js" async></script>
 </head>
 <body>
+    <!-- Adblocker Honeypot -->
+    <div class="ads ad-banner ad-container" style="height: 1px; width: 1px; overflow: hidden; position: absolute; top: -1000px; left: -1000px;"></div>
+    <script>
+        // Adblocker detection script
+        document.addEventListener('DOMContentLoaded', function() {
+            const honeypot = document.querySelector('.ads.ad-banner.ad-container');
+            if (honeypot && (honeypot.offsetHeight === 0 || honeypot.style.display === 'none' || honeypot.style.visibility === 'hidden')) {
+                console.log('Honeypot detected adblocker, redirecting to adblock-warning.html');
+                window.location.href = 'adblock-warning.html';
+            }
+        });
+    </script>
     
     <!-- Header Navigation -->
     <header class="header">
