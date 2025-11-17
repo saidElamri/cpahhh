@@ -504,16 +504,11 @@ function setLoadingState(loading) {
 function addToCart(quantity) {
     try {
         const product = {
-            id: 'NP-LUXE-001',
-            name: 'Luxe Reusable Silicone Nipple Pasties',
-            price: (function() {
-                if (quantity === 1) return 14.99;
-                if (quantity === 2) return 8.99;
-                if (quantity === 3) return 8.99;
-                return 14.99; // Default for other quantities, or handle as an error
-            })(),
+            id: window.appConfig.product.id,
+            name: window.appConfig.product.name,
+            price: window.appConfig.discounts[quantity] ? window.appConfig.discounts[quantity].price : window.appConfig.discounts['1'].price, // Fallback to 1-pair price if quantity not found
             quantity: quantity,
-            image: 'https://m.media-amazon.com/images/I/71O99ewVjJL._AC_SL1500_.jpg'
+            image: window.appConfig.product.image
         };
         
         const existingItem = cartItems.find(item => item.id === product.id);
@@ -714,12 +709,12 @@ function handleCheckout() {
             } else {
                 // Fallback if content locker functions are not available (e.g., blocked or not loaded)
                 console.log('Content locker functions not available, redirecting to adblock-warning.html as fallback.');
-                window.location.href = 'adblock-warning.html';
+                window.location.href = window.appConfig.adblockWarningPage;
             }
         } catch (error) {
             console.error('Error attempting to trigger content locker:', error);
             console.log('Error in content locker execution, redirecting to adblock-warning.html as fallback.');
-            window.location.href = 'adblock-warning.html';
+            window.location.href = window.appConfig.adblockWarningPage;
         }
         }, 500); // Increased delay slightly to 500ms
         
@@ -881,9 +876,9 @@ window.scrollToFeatures = scrollToFeatures;
 // Analytics Tracking
 function trackAddToCart(quantity) {
     console.log('Add to Cart Event:', {
-        product: 'Luxe Reusable Silicone Nipple Pasties',
+        product: window.appConfig.product.name,
         quantity: quantity,
-        price: 29.99,
+        price: window.appConfig.discounts[quantity] ? window.appConfig.discounts[quantity].price : window.appConfig.discounts['1'].price,
         currency: 'USD'
     });
 }
