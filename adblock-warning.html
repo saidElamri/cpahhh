@@ -89,5 +89,43 @@
         <p>To continue with your purchase and access exclusive discounts, please <strong>disable your adblocker</strong> for Luxe Essentials and refresh this page.</p>
         <a href="index.html" class="btn">I've Disabled My Adblocker - Continue</a>
     </div>
+
+    <script>
+        // Script to continuously check for adblocker status and redirect if disabled
+        function checkAdblockStatus() {
+            let adblockDetected = false;
+
+            // Method 1: Check for a common ad-related global variable
+            if (typeof window.google_ad_client === 'undefined') {
+                adblockDetected = true;
+            }
+
+            // Method 2: Static honeypot with a very common ad class
+            const honeypot = document.createElement('div');
+            honeypot.className = 'ad-banner'; // Very common ad class
+            honeypot.style.cssText = 'width: 1px !important; height: 1px !important; position: absolute !important; left: -9999px !important; top: -9999px !important;';
+            document.documentElement.appendChild(honeypot); // Append to html element for earliest possible DOM presence
+
+            setTimeout(() => {
+                // Check honeypot visibility
+                if (honeypot.offsetHeight === 0 || honeypot.style.display === 'none' || honeypot.style.visibility === 'hidden' || window.getComputedStyle(honeypot).getPropertyValue('display') === 'none') {
+                    adblockDetected = true;
+                }
+
+                // If no adblock is detected, redirect to index.html
+                if (!adblockDetected) {
+                    window.location.href = 'index.html';
+                }
+
+                // Clean up
+                if (honeypot.parentNode) {
+                    honeypot.parentNode.removeChild(honeypot);
+                }
+            }, 50); // Short delay to allow adblockers to act
+        }
+
+        // Check every 2 seconds
+        setInterval(checkAdblockStatus, 2000);
+    </script>
 </body>
 </html>
