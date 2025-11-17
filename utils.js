@@ -87,9 +87,20 @@ function trackAddToCart(quantity) {
     });
 }
 
+// Form Validation
+function validateForm() {
+    const quantityInput = document.getElementById('quantity');
+    if (!quantityInput || parseInt(quantityInput.value) <= 0) {
+        window.showFormError('Please select a quantity.');
+        return false;
+    }
+    return true;
+}
+
 // Make functions globally accessible
 window.showFormError = showFormError;
 window.showError = showError;
 window.scrollToProduct = scrollToProduct;
 window.scrollToFeatures = scrollToFeatures;
 window.trackAddToCart = trackAddToCart;
+window.validateForm = validateForm;

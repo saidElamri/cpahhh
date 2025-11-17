@@ -24,7 +24,7 @@ function handleAddToCart(e) {
     e.preventDefault();
     if (isSubmitting) return; // isSubmitting is global in script.js
 
-    if (!validateForm()) { // validateForm is global from utils.js
+    if (!window.validateForm()) { // validateForm is global from utils.js
         return;
     }
 
