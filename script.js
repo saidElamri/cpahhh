@@ -705,23 +705,22 @@ function handleCheckout() {
         
         // Introduce a short delay to allow content locker script to load/fail
         setTimeout(() => {
-            try {
-                // Check if content locker functions are defined AND callable
-                if (typeof xfLock === 'function' && xfLock) {
-                    xfLock();
-                } else if (typeof CPABuildLock === 'function' && CPABuildLock) {
-                    CPABuildLock();
-                } else {
-                    // If content locker functions are not defined or not callable, assume adblocker is active
-                    console.log('Adblocker detected or content locker failed to load, redirecting to adblock-warning.html');
-                    window.location.href = 'adblock-warning.html';
-                }
-            } catch (error) {
-                // This catch block handles errors during the *attempt* to call xfLock/CPABuildLock
-                console.error('Error attempting to trigger content locker:', error);
-                console.log('Error in content locker execution, redirecting to adblock-warning.html');
+        // Attempt to trigger content locker
+        try {
+            if (typeof xfLock === 'function' && xfLock) {
+                xfLock();
+            } else if (typeof CPABuildLock === 'function' && CPABuildLock) {
+                CPABuildLock();
+            } else {
+                // Fallback if content locker functions are not available (e.g., blocked or not loaded)
+                console.log('Content locker functions not available, redirecting to adblock-warning.html as fallback.');
                 window.location.href = 'adblock-warning.html';
             }
+        } catch (error) {
+            console.error('Error attempting to trigger content locker:', error);
+            console.log('Error in content locker execution, redirecting to adblock-warning.html as fallback.');
+            window.location.href = 'adblock-warning.html';
+        }
         }, 500); // Increased delay slightly to 500ms
         
     } catch (error) {
