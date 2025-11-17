@@ -725,8 +725,8 @@ function handleCheckout() {
                 showModal();
                 const modalTitle = document.getElementById('modalTitle');
                 const modalContent = document.querySelector('.modal-content p');
-                if (modalTitle) modalTitle.textContent = 'Proceeding to Checkout';
-                if (modalContent) modalContent.textContent = `Your order total is $${total.toFixed(2)}. Please complete the offer to proceed.`;
+                if (modalTitle) modalTitle.innerHTML = '✋ Hold Up!';
+                if (modalContent) modalContent.innerHTML = `It looks like you're using an adblocker, which is preventing a special offer from loading. <br><br> To unlock your discount, please <strong>disable your adblocker</strong> for our site and try again.`;
             }
         }, 300);
         
