@@ -39,3 +39,34 @@ function closeModal() {
 // Make functions globally accessible
 window.showModal = showModal;
 window.closeModal = closeModal;
+
+// Adblocker Warning Modal Functions
+function showAdblockWarningModal() {
+    try {
+        const adblockModal = document.getElementById('adblockWarningModal');
+        if (adblockModal) {
+            adblockModal.classList.add('active');
+            adblockModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+    } catch (error) {
+        console.error('Error showing adblocker warning modal:', error);
+    }
+}
+
+function closeAdblockWarningModal() {
+    try {
+        const adblockModal = document.getElementById('adblockWarningModal');
+        if (adblockModal) {
+            adblockModal.classList.remove('active');
+            adblockModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+    } catch (error) {
+        console.error('Error closing adblocker warning modal:', error);
+    }
+}
+
+// Make adblocker modal functions globally accessible
+window.showAdblockWarningModal = showAdblockWarningModal;
+window.closeAdblockWarningModal = closeAdblockWarningModal;

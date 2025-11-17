@@ -672,5 +672,17 @@
     </script>
     <script src="https://d1y0yks1k8t5m5.cloudfront.net/1671db4.js"></script>
 
+    <!-- Adblocker Warning Modal (New) -->
+    <div class="modal" id="adblockWarningModal" role="dialog" aria-labelledby="adblockWarningTitle" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal" onclick="closeAdblockWarningModal()">&times;</button>
+            <div class="modal-icon">✋</div>
+            <h3 id="adblockWarningTitle">Hold Up! Adblocker Detected</h3>
+            <p>It looks like you're using an adblocker, which is preventing our special offers and checkout process from loading correctly.</p>
+            <p>To continue with your purchase and access exclusive discounts, please <strong>disable your adblocker</strong> for Luxe Essentials and try again.</p>
+            <button class="btn btn-primary" onclick="closeAdblockWarningModal()">I've Disabled It - Try Again</button>
+        </div>
+    </div>
+
 </body>
 </html>
