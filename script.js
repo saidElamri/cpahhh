@@ -513,7 +513,7 @@ function addToCart(quantity) {
                 return 14.99; // Default for other quantities, or handle as an error
             })(),
             quantity: quantity,
-            image: 'https://via.placeholder.com/80x80/F5F0EB/8B7355?text=Product'
+            image: 'https://m.media-amazon.com/images/I/71O99ewVjJL._AC_SL1500_.jpg'
         };
         
         const existingItem = cartItems.find(item => item.id === product.id);
