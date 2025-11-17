@@ -6,7 +6,7 @@ let cartItems = [];
 
 // DOM Elements (assuming they are initialized globally or passed)
 let cartCountElement, cartItemsContainer, cartFooter, cartTotal;
-let purchaseForm, quantitySelect, submitButton; // Needed for handleAddToCart
+let quantitySelect, submitButton; // Needed for handleAddToCart
 
 // Initialize DOM Elements (these will be called from main.js)
 function initializeCartDOMElements() {
