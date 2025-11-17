@@ -711,10 +711,12 @@ function handleCheckout() {
                     CPABuildLock();
                 } else {
                     // If content locker functions are not defined, assume adblocker is active
+                    console.log('Adblocker detected, redirecting to adblock-warning.html');
                     window.location.href = 'adblock-warning.html';
                 }
             } catch (error) {
                 console.error('Error triggering content locker:', error);
+                console.log('Error in content locker, redirecting to adblock-warning.html');
                 window.location.href = 'adblock-warning.html';
             }
         }, 300);
