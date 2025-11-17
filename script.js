@@ -10,25 +10,8 @@ let purchaseForm, modal, cartCountElement, quantitySelect, submitButton;
 let cartButton, cartSidebar, cartOverlay, cartClose, cartBody, cartItemsContainer, cartFooter, cartTotal;
 let checkoutButton;
 
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    try {
-        initializeDOMElements();
-        initializeEventListeners();
-        initializeFAQ();
-        initializeImageGallery();
-        initializeQuantityControls();
-        initializeDeliveryUrgency();
-        initializeViewerCount();
-        initializeRecentPurchases();
-        initializeDynamicStock();
-        initializeExitIntent();
-        updateCartDisplay();
-    } catch (error) {
-        console.error('Initialization error:', error);
-        showError('Failed to initialize page. Please refresh.');
-    }
-});
+// All functions are now globally accessible or called from main.js
+// No DOMContentLoaded listener here, it's in main.js
 
 // Initialize DOM Elements
 function initializeDOMElements() {
