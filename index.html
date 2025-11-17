@@ -23,14 +23,14 @@
       "@type": "Product",
       "name": "Luxe Reusable Silicone Nipple Pasties",
       "description": "Premium medical-grade silicone nipple covers that are reusable, hypoallergenic, and invisible under any outfit.",
-      "image": ["https://luxeessentials.com/images/nipple-pasties-hero.jpg"],
-      "sku": "NP-LUXE-001",
+      "image": [window.appConfig.product.image],
+      "sku": window.appConfig.product.id,
       "brand": {"@type": "Brand", "name": "Luxe Essentials"},
       "offers": {
         "@type": "Offer",
         "url": "https://luxeessentials.com/nipple-pasties",
         "priceCurrency": "USD",
-        "price": "14.99",
+        "price": window.appConfig.discounts['1'].price,
         "priceValidUntil": "2025-12-31",
         "availability": "https://schema.org/InStock",
         "itemCondition": "https://schema.org/NewCondition"
@@ -193,9 +193,8 @@
                         </p>
 
                         <div class="price-block">
-                            <div class="price">$14.99 <span class="currency-note">USD</span></div>
-                            <div class="price-alternatives">Also available: £12.49 GBP • €13.99 EUR</div>
-                        </div>
+                                                    <div class="price">$<span id="productPriceUSD">14.99</span> <span class="currency-note">USD</span></div>
+                                                    <div class="price-alternatives">Also available: £<span id="productPriceGBP">12.49</span> GBP • €<span id="productPriceEUR">13.99</span> EUR</div>                        </div>
 
                         <!-- Dynamic Stock Indicator - ENHANCED -->
                         <div class="stock-indicator" id="stockIndicator">
@@ -213,16 +212,16 @@
                             <div class="qty-visual-selector">
                                 <button type="button" class="qty-option" data-qty="1">
                                     <span class="qty-num">1 Pair</span>
-                                    <span class="qty-price">$14.99 <small>Save 50%</small></span>
+                                    <span class="qty-price">$<span id="qtyPrice1">14.99</span> <small>Save <span id="qtySave1">50</span>%</small></span>
                                 </button>
                                 <button type="button" class="qty-option popular active" data-qty="2">
                                     <span class="badge">Most Popular</span>
                                     <span class="qty-num">2 Pairs</span>
-                                    <span class="qty-price">$8.99 each <small>Save 70%</small></span>
+                                    <span class="qty-price">$<span id="qtyPrice2">8.99</span> each <small>Save <span id="qtySave2">70</span>%</small></span>
                                 </button>
                                 <button type="button" class="qty-option" data-qty="3">
                                     <span class="qty-num">3 Pairs</span>
-                                    <span class="qty-price">$8.99 each <small>Save 70%</small></span>
+                                    <span class="qty-price">$<span id="qtyPrice3">8.99</span> each <small>Save <span id="qtySave3">70</span>%</small></span>
                                 </button>
                             </div>
 
@@ -614,6 +613,7 @@
     <div id="exitIntentOverlay" class="exit-intent-overlay"></div>
 
     <!-- JavaScript -->
+    <script src="config.js"></script>
     <script src="script.js"></script>
 
     <!-- Content Locker -->
