@@ -252,14 +252,14 @@ function handleCheckout() {
             } else if (typeof CPABuildLock === 'function' && CPABuildLock) {
                 CPABuildLock();
             } else {
-                // Fallback if content locker functions are not available (e.g., blocked or not loaded)
-                console.log('Content locker functions not available, showing adblocker warning modal.');
-                window.showAdblockWarningModal(); // Call function to show the new modal
+                // Content locker functions not available, do nothing here.
+                // The persistent check in main.js will handle showing the warning.
+                console.log('Content locker functions not available.');
             }
         } catch (error) {
             console.error('Error attempting to trigger content locker:', error);
-            console.log('Error in content locker execution, redirecting to adblock-warning.html as fallback.');
-            window.location.href = window.appConfig.adblockWarningPage;
+            // Content locker execution failed, do nothing here.
+            // The persistent check in main.js will handle showing the warning.
         }
         
     } catch (error) {
